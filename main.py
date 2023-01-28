@@ -1,9 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 
-def main():
+# code derived from: https://docs.python.org/3/library/tkinter.html#a-hello-world-program
+def test_window():
     window = tk.Tk()
     frame = ttk.Frame(window, padding=10)
+
     frame.grid()
     
     ttk.Label(frame, text="Hello World!").grid(column=0, row=0)
@@ -13,4 +15,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    test_window()
