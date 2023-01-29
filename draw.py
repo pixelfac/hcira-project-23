@@ -23,8 +23,8 @@ def reset_canvas_coords(event):
 
 # Clear the canvas
 def clear_canvas(event):
-    canvas.delete('all')
-    coords.clear()
+    canvas.delete('all') # delete all objects on canvas
+    coords.clear()       # empty coords list  
 
 
 win = tk.Tk()            # init window
