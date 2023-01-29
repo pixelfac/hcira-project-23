@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 # code derived from: https://docs.python.org/3/library/tkinter.html#a-hello-world-program
 def test_window():
