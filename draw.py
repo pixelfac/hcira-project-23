@@ -35,9 +35,9 @@ canvas.pack()  # pack adds canvas to parent (window), and also can adjust scalin
 canvas.old_coords = None
 coords = []  # store coordinates
 
-win.bind('<ButtonPress-1>', init_coords)
-win.bind('<B1-Motion>', draw_line)
-win.bind('<ButtonRelease-1>', reset_canvas_coords)
-win.bind('<ButtonPress-3>', clear_canvas)
-win.mainloop()
+win.bind('<ButtonPress-1>', init_coords)    # on LeftClick, prepare for line drawing
+win.bind('<B1-Motion>', draw_line)          # when LeftClick is held and mouse is moving, call draw_line() function
+win.bind('<ButtonRelease-1>', reset_canvas_coords) # resets line drawing variables
+win.bind('<ButtonPress-3>', clear_canvas)   # on RightClick, clear canvas and coords list
+win.mainloop() # start main event loop
 # print(coords)
