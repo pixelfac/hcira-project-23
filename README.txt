@@ -1,4 +1,9 @@
-Project for HCIRA, Spring '23
+Project1 Submission for HCIRA, Spring '23
+
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
 
 We have used the tkinter package in our submission. This is a standard GUI toolkit used in Python. 
 We created a program in Python which accomplishes the following tasks. 
