@@ -1,4 +1,5 @@
 import tkinter as tk
+from unistroke import templates
 
 
 # Initialise coords list with first point
