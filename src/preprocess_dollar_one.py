@@ -40,6 +40,7 @@ def rotate_to_zero(points):
     :param points: array of coordinates
     :return: array of coordinates after applying rotation
     """
+
     centroid_x, centroid_y = get_centroid(np.array(points))
     angle = math.atan2(centroid_y - points[0][1], centroid_x - points[0][0])
     # Not sure if rotate by angle or -angle...paper says -angle but it rotates anticlockwise
@@ -56,6 +57,7 @@ def rotate_by(points, angle, centroid):
     :param centroid: coordinates of centroid
     :return: array of points after rotation
     """
+
     centroid_x = centroid[0]
     centroid_y = centroid[1]
     new_points = []
@@ -103,6 +105,7 @@ def get_centroid(points):
     :param points: array of coordinates
     :return: x, y coordinate of centroid
     """
+    
     n = points.shape[0]
     sum_x_coords = np.sum(points[:, 0])
     sum_y_coords = np.sum(points[:, 1])
