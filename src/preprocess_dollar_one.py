@@ -110,3 +110,47 @@ def get_centroid(points):
     sum_x_coords = np.sum(points[:, 0])
     sum_y_coords = np.sum(points[:, 1])
     return sum_x_coords / n, sum_y_coords / n
+
+def scale_to_square(points , square_size):
+    """
+    Method to scale the points
+    :param points: array of coordinates , size of the square.
+    :return: new points as an array after scaling
+    """
+    maximum_x, maximum_y = np.max(points, 0)
+    minimum_x, minimum_y = np.min(points, 0) 
+
+    box_width = maximum_x - minimum_x
+    box_height = maximum_y - minimum_y
+
+    new_points = np.zeros((1,2))
+
+    for point in points:
+        q = np.array([0.,0.])
+        q[0] = point[0] * (square_size / box_width)
+        q[1] = point[1] * (square_size / box_height)
+        new_points = np.append(new_points, [q] , 0)
+    
+    return new_points[1:]
+
+def translate_to_origin(points):
+    
+    """
+    Method to translate the points to origin
+    :param points: array of coordinates
+    :return: new points as an array after translating to origin
+    """
+
+    centroid_x, centroid_y = get_centroid(np.array(points))
+    new_points = np.zeros((1,2))
+
+    for point in points:
+        q = np.array([0.,0.])
+        q[0] = point[0] - centroid_x
+        q[1] = point[1] - centroid_y
+        new_points = np.append(new_points, [q] , 0)
+    
+    return new_points[1:]
+
+
+
