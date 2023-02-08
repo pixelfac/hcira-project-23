@@ -1,5 +1,6 @@
 import tkinter as tk
 from unistroke import templates
+import preprocess_dollar_one as dollar1
 
 
 # Initialise coords list with first point
@@ -24,8 +25,13 @@ def reset_canvas_coords():
 
 def process_line(event):
     reset_canvas_coords()
+    
+    # $1 algoritmh
+    template, score = dollar1.recognize(coords, 64) # 64 is arbitrary
 
-    #start $1 algorithm
+    print (template.label)
+    print(score)
+
     
 
 
