@@ -185,7 +185,8 @@ def recognize(points, n):
     chosen_template = None
 
     for template in templates:
-        distance = distance_at_best_angle(points, template, -angle_range, angle_range,angle_step)
+        template_points = resample_points(template.points, number_of_points)
+        distance = distance_at_best_angle(points, template_points, -angle_range, angle_range, angle_step)
 
         if distance < b :
             b = distance
@@ -195,38 +196,40 @@ def recognize(points, n):
 
     return chosen_template, score
 
-def distance_at_best_angle(points, template, angle_a, angle_b, angle_step):
+def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step):
 		x1 = phi * angle_a + (1 - phi) * angle_b
-		f1 = distance_at_angle(points, template, x1)
+		f1 = distance_at_angle(points, template_pts, x1)
 		x2 = (1 - phi) * angle_a + phi * angle_b
-		f2 = distance_at_angle(points, template, x2)
+		f2 = distance_at_angle(points, template_pts, x2)
 		while np.abs(angle_b - angle_a) > angle_step:
 			if f1 < f2:
 				angle_b = x2
 				x2 = x1
 				f2 = f1
 				x1 = phi * angle_a + (1 - phi) * angle_b
-				f1 = distance_at_angle(points, template, x1)
+				f1 = distance_at_angle(points, template_pts, x1)
 			else:
 				angle_a = x1
 				x1 = x2
 				f1 = f2
 				x2 = (1 - phi) * angle_a + phi * angle_b
-				f2 = distance_at_angle(points, template, x2)
+				f2 = distance_at_angle(points, template_pts, x2)
 		return min(f1, f2)
 
-def distance_at_angle(points, template, angle):
+def distance_at_angle(points, template_pts, angle):
     
     x, y = get_centroid(list(points))
     
     centroid =  list([x,y])
 
     newPoints = rotate_by(points, angle, centroid)
-    d = path_distance(newPoints, template.points)
+    d = path_distance(newPoints, template_pts)
     
     return d
 
 def path_distance(path1, path2):
+    print("len path 1", len(path1))
+    print("len path 2", len(path2))
     if len(path1) != len(path2):
         print("Not possible, check the paths")  
     d = 0
