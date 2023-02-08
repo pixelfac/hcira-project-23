@@ -3,13 +3,12 @@ import numpy as np
 from numpy.linalg import linalg
 from unistroke import templates
 
-#global variables and constants
+# global variables and constants
 
 square_size = 64.
 angle_range = 60.
 angle_step = 2.
 phi = 0.5 * (-1 + np.sqrt(5))
-
 
 
 def resample_points(points, n):
@@ -22,18 +21,18 @@ def resample_points(points, n):
     """
 
     path_length = get_path_length(points)
-    length = path_length / (n-1)
+    length = path_length / (n - 1)
     d = 0
     temp_points = points[:]
     new_points = [points[0]]
     i = 1
     while i < len(temp_points):
-        prev_point = temp_points[i-1]
+        prev_point = temp_points[i - 1]
         curr_point = temp_points[i]
         dist = get_distance([prev_point, curr_point])
         if (d + dist) >= length:
-            qx = temp_points[i-1][0] + ((length - d) / dist) * (temp_points[i][0] - temp_points[i-1][0])
-            qy = temp_points[i-1][1] + ((length - d) / dist) * (temp_points[i][1] - temp_points[i-1][1])
+            qx = temp_points[i - 1][0] + ((length - d) / dist) * (temp_points[i][0] - temp_points[i - 1][0])
+            qy = temp_points[i - 1][1] + ((length - d) / dist) * (temp_points[i][1] - temp_points[i - 1][1])
             new_points.append([qx, qy])
             temp_points.insert(i, [qx, qy])
             d = 0
@@ -101,13 +100,14 @@ def get_path_length(points):
 
     path_length = 0
     n = len(points)
-    for i in range(n-1):
+    for i in range(n - 1):
         curr_point = points[i]
         next_point = points[i + 1]
         dist = get_distance([curr_point, next_point])
         path_length = path_length + dist
 
     return path_length
+
 
 def get_centroid(points):
     """
@@ -120,6 +120,7 @@ def get_centroid(points):
     sum_x_coords = np.sum(points[:][0])
     sum_y_coords = np.sum(points[:][1])
     return sum_x_coords / n, sum_y_coords / n
+
 
 def scale_to_square(points):
     """
@@ -143,6 +144,7 @@ def scale_to_square(points):
     
     return new_points[1:]
 
+
 def translate_to_origin(points):
     
     """
@@ -157,7 +159,6 @@ def translate_to_origin(points):
 
     # new_points = points-centroid
 
-
     for point in points:
         q = np.array([0.,0.])
         q[0] = point[0] - centroid_x
@@ -165,6 +166,8 @@ def translate_to_origin(points):
         new_points = np.append(new_points, [q] , 0)
     
     return new_points[1:]
+
+
 def recognize(points, n):
     
     """
@@ -200,36 +203,39 @@ def recognize(points, n):
 
     return chosen_template, score
 
+
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step):
-		x1 = phi * angle_a + (1 - phi) * angle_b
-		f1 = distance_at_angle(points, template_pts, x1)
-		x2 = (1 - phi) * angle_a + phi * angle_b
-		f2 = distance_at_angle(points, template_pts, x2)
-		while np.abs(angle_b - angle_a) > angle_step:
-			if f1 < f2:
-				angle_b = x2
-				x2 = x1
-				f2 = f1
-				x1 = phi * angle_a + (1 - phi) * angle_b
-				f1 = distance_at_angle(points, template_pts, x1)
-			else:
-				angle_a = x1
-				x1 = x2
-				f1 = f2
-				x2 = (1 - phi) * angle_a + phi * angle_b
-				f2 = distance_at_angle(points, template_pts, x2)
-		return min(f1, f2)
+    x1 = phi * angle_a + (1 - phi) * angle_b
+    f1 = distance_at_angle(points, template_pts, x1)
+    x2 = (1 - phi) * angle_a + phi * angle_b
+    f2 = distance_at_angle(points, template_pts, x2)
+    while np.abs(angle_b - angle_a) > angle_step:
+        if f1 < f2:
+            angle_b = x2
+            x2 = x1
+            f2 = f1
+            x1 = phi * angle_a + (1 - phi) * angle_b
+            f1 = distance_at_angle(points, template_pts, x1)
+        else:
+            angle_a = x1
+            x1 = x2
+            f1 = f2
+            x2 = (1 - phi) * angle_a + phi * angle_b
+            f2 = distance_at_angle(points, template_pts, x2)
+    return min(f1, f2)
+
 
 def distance_at_angle(points, template_pts, angle):
     
     x, y = get_centroid(list(points))
     
-    centroid =  list([x,y])
+    centroid = list([x, y])
 
-    newPoints = rotate_by(points, angle, centroid)
-    d = path_distance(newPoints, template_pts)
+    new_points = rotate_by(points, angle, centroid)
+    d = path_distance(new_points, template_pts)
     
     return d
+
 
 def path_distance(path1, path2):
     print("len path 1", len(path1))
@@ -239,5 +245,5 @@ def path_distance(path1, path2):
     d = 0
     for p_1, p_2 in zip(path1, path2):
         d = d + get_distance([p_1, p_2])
-	 
+
     return d / len(path1)
