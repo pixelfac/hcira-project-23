@@ -1,8 +1,7 @@
 import math
 import numpy as np
 from numpy.linalg import linalg
-from .unistroke import templates
-from itertools import izip
+from unistroke import templates
 
 #global variables and constants
 
@@ -231,9 +230,9 @@ def path_distance(path1, path2):
     if len(path1) != len(path2):
         print("Not possible, check the paths")  
     d = 0
-    for p_1, p_2 in izip(path1, path2):
+    for p_1, p_2 in zip(path1, path2):
         d = d + get_distance(p_1, p_2)
-	
+	 
     return d / len(path1)
 
 def get_distance(point1, point2):
