@@ -186,6 +186,10 @@ def recognize(points, n):
 
     for template in templates:
         template_points = resample_points(template.points, number_of_points)
+        template_points = rotate_to_zero(template_points)
+        template_points = scale_to_square(template_points)
+        template_points = translate_to_origin(template_points)
+        
         distance = distance_at_best_angle(points, template_points, -angle_range, angle_range, angle_step)
 
         if distance < b :
