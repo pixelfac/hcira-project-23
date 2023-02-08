@@ -185,7 +185,7 @@ def recognize(points, n):
     chosen_template = None
 
     for template in templates:
-        distance = distance_at_best_angle( points, template.points, -angle_range, angle_range,angle_step)
+        distance = distance_at_best_angle(points, template, -angle_range, angle_range,angle_step)
 
         if distance < b :
             b = distance
@@ -231,9 +231,6 @@ def path_distance(path1, path2):
         print("Not possible, check the paths")  
     d = 0
     for p_1, p_2 in zip(path1, path2):
-        d = d + get_distance(p_1, p_2)
+        d = d + get_distance([p_1, p_2])
 	 
     return d / len(path1)
-
-def get_distance(point1, point2):
-	return linalg.norm(np.array(point2) - np.array(point1))
