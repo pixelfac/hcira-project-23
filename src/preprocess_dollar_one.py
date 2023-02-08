@@ -116,7 +116,7 @@ def get_centroid(points):
     :return: x, y coordinate of centroid
     """
     
-    n = points.shape[0]
+    n = len(points)
     sum_x_coords = np.sum(points[:, 0])
     sum_y_coords = np.sum(points[:, 1])
     return sum_x_coords / n, sum_y_coords / n
