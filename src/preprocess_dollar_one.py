@@ -222,7 +222,7 @@ def distance_at_angle(points, template, angle):
     centroid =  list([x,y])
 
     newPoints = rotate_by(points, angle, centroid)
-    d = path_distance(newPoints, template)
+    d = path_distance(newPoints, template.points)
     
     return d
 
