@@ -17,9 +17,16 @@ def draw_line(event):
 
 
 # Reset the last coordinate after mouse release
-def reset_canvas_coords(event):
+def reset_canvas_coords():
     canvas.old_coords = None
     print(len(coords))
+
+
+def process_line(event):
+    reset_canvas_coords()
+
+    #start $1 algorithm
+    
 
 
 # Clear the canvas
@@ -38,7 +45,7 @@ coords = []  # store coordinates
 
 win.bind('<ButtonPress-1>', init_coords)    # on LeftClick, prepare for line drawing
 win.bind('<B1-Motion>', draw_line)          # when LeftClick is held and mouse is moving, call draw_line() function
-win.bind('<ButtonRelease-1>', reset_canvas_coords) # resets line drawing variables
+win.bind('<ButtonRelease-1>', process_line) # resets line drawing variables
 win.bind('<ButtonPress-3>', clear_canvas)   # on RightClick, clear canvas and coords list
 win.mainloop() # start main event loop
 # print(coords)

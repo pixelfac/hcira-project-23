@@ -1,5 +1,16 @@
 import math
 import numpy as np
+from numpy.linalg import linalg
+from .unistroke import templates
+from itertools import izip
+
+#global variables and constants
+
+square_size = 64.
+angle_range = 60.
+angle_step = 2.
+phi = 0.5 * (-1 + np.sqrt(5))
+
 
 
 def resample_points(points, n):
@@ -110,3 +121,120 @@ def get_centroid(points):
     sum_x_coords = np.sum(points[:, 0])
     sum_y_coords = np.sum(points[:, 1])
     return sum_x_coords / n, sum_y_coords / n
+
+def scale_to_square(points):
+    """
+    Method to scale the points
+    :param points: array of coordinates , size of the square.
+    :return: new points as an array after scaling
+    """
+    maximum_x, maximum_y = np.max(points, 0)
+    minimum_x, minimum_y = np.min(points, 0) 
+
+    box_width = maximum_x - minimum_x
+    box_height = maximum_y - minimum_y
+
+    new_points = np.zeros((1,2))
+
+    for point in points:
+        q = np.array([0.,0.])
+        q[0] = point[0] * (square_size / box_width)
+        q[1] = point[1] * (square_size / box_height)
+        new_points = np.append(new_points, [q] , 0)
+    
+    return new_points[1:]
+
+def translate_to_origin(points):
+    
+    """
+    Method to translate the points to origin
+    :param points: array of coordinates
+    :return: new points as an array after translating to origin
+    """
+
+    centroid_x, centroid_y = get_centroid(np.array(points))
+    # centroid = np.array([centroid_x,centroid_y])
+    new_points = np.zeros((1,2))
+
+    # new_points = points-centroid
+
+
+    for point in points:
+        q = np.array([0.,0.])
+        q[0] = point[0] - centroid_x
+        q[1] = point[1] - centroid_y
+        new_points = np.append(new_points, [q] , 0)
+    
+    return new_points[1:]
+def recognize(points, n):
+    
+    """
+    Method to match the set of points against the template
+    :param points: array of coordinates
+    :param n : number of points
+    :param templates : all templates
+    :return: chosen template and score
+    """ 
+    number_of_points = n
+    points = resample_points(list(points) , number_of_points)
+    points = rotate_to_zero(list(points))
+    points = scale_to_square(list(points))
+    points = translate_to_origin(list(points))
+
+    b = float('inf')
+
+    chosen_template = None
+
+    for template in templates:
+        distance = distance_at_best_angle( points, template.points, -angle_range, angle_range,angle_step)
+
+        if distance < b :
+            b = distance
+            chosen_template = template
+    
+    score = 1 - b /(0.5 * np.sqrt(square_size**2 + square_size**2))
+
+    return chosen_template, score
+
+def distance_at_best_angle(points, template, angle_a, angle_b, angle_step):
+		x1 = phi * angle_a + (1 - phi) * angle_b
+		f1 = distance_at_angle(points, template, x1)
+		x2 = (1 - phi) * angle_a + phi * angle_b
+		f2 = distance_at_angle(points, template, x2)
+		while np.abs(angle_b - angle_a) > angle_step:
+			if f1 < f2:
+				angle_b = x2
+				x2 = x1
+				f2 = f1
+				x1 = phi * angle_a + (1 - phi) * angle_b
+				f1 = distance_at_angle(points, template, x1)
+			else:
+				angle_a = x1
+				x1 = x2
+				f1 = f2
+				x2 = (1 - phi) * angle_a + phi * angle_b
+				f2 = distance_at_angle(points, template, x2)
+		return min(f1, f2)
+
+def distance_at_angle(points, template, angle):
+    
+    x, y = get_centroid(list(points))
+    
+    centroid =  list([x,y])
+
+    newPoints = rotate_by(points, angle, centroid)
+    d = path_distance(newPoints, template)
+    
+    return d
+
+def path_distance(path1, path2):
+    if len(path1) != len(path2):
+        print("Not possible, check the paths")  
+    d = 0
+    for p_1, p_2 in izip(path1, path2):
+        d = d + get_distance(p_1, p_2)
+	
+    return d / len(path1)
+
+def get_distance(point1, point2):
+	return linalg.norm(np.array(point2) - np.array(point1))
