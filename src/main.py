@@ -1,6 +1,15 @@
 import tkinter as tk
+import numpy as np
 from unistroke import templates
 import preprocess_dollar_one as dollar1
+
+
+# global variables and constants
+
+square_size = 250
+angle_range = 45
+angle_step = 2
+phi = 0.5 * (-1 + np.sqrt(5))
 
 
 # Initialise coords list with first point
@@ -21,46 +30,26 @@ def draw_line(event):
 
 
 # Reset the last coordinate after mouse release
-def reset_canvas_coords():
+def reset_canvas_coords(event):
     canvas.old_coords = None
-    print(len(coords))
+    # print(len(coords))
 
 
 def process_line(event):
-    reset_canvas_coords()
+    reset_canvas_coords(event)
 
-    # $1 algoritmh
-    template, score = dollar1.recognize(coords, 64) # 64 is arbitrary
-
-    print (template.label)
-    print(score)
-
-
+    # $1 algorithm
+    template, score = dollar1.recognize(coords, 64, angle_range=angle_range, angle_step=angle_step,
+                                        phi=phi, square_size=square_size)
+    label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
+    # print(template.label)
+    # print(score)
 
 
 # Clear the canvas
 def clear_canvas(event):
     canvas.delete('all')  # delete all objects on canvas
     coords.clear()  # empty coords list
-
-
-def recognise_gesture(event):
-    """
-
-    :param event:
-    :return:
-    """
-
-    # perform preprocessing
-    if not coords:
-        return
-    resampled_points = dollar1.resample_points(coords, n=64)
-    rotated_points = dollar1.rotate_to_zero(resampled_points)
-    # scaled_and_translated_points = scale_and_translate(rotated_points)
-    # label, score = recognise(coords)
-    label = "Rectangle"
-    score = "0.9"
-    label_recognised_candidate["text"] = "Predicted Label: " + label + ", score: " + score
 
 
 win = tk.Tk()  # init window
@@ -83,28 +72,11 @@ label_current_coord.place(y=45, x=0)
 label_recognised_candidate = tk.Label(text="")
 label_recognised_candidate.place(y=65, x=0)
 
-win.title("Hello world")
+win.title("$1 gesture recognition")
 win.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
 win.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
 win.bind('<ButtonRelease-1>', reset_canvas_coords)  # resets line drawing variables
 win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coords list
-win.bind('<space>', recognise_gesture)  # On pressing space bar, recognise the gesture
+win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
 
 win.mainloop()  # start main event loop
-# print(coords)
-
-# new_points = resample_points(coords, 64)
-# print(len(new_points))
-# rotated_points = rotate_to_zero(new_points)
-# lines = [(rotated_points[n][0], rotated_points[n][1]) for n in range(0, len(rotated_points))]
-#
-#
-# # Test the new points on a new canvas
-#
-# # lines = [(new_points[n][0], new_points[n][1]) for n in range(0, len(new_points))]
-# win2 = tk.Tk()            # init window
-# win2.geometry("500x500")  # set window dimensions
-# canvas = tk.Canvas(win2, width=500, height=500)
-# canvas.pack()
-# canvas.create_line(lines)
-# win2.mainloop()

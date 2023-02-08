@@ -3,13 +3,6 @@ import numpy as np
 from numpy.linalg import linalg
 from unistroke import templates
 
-# global variables and constants
-
-square_size = 64.
-angle_range = 60.
-angle_step = 2.
-phi = 0.5 * (-1 + np.sqrt(5))
-
 
 def resample_points(points, n):
     """
@@ -40,6 +33,9 @@ def resample_points(points, n):
             d = d + dist
         i = i + 1
 
+    # if len(new_points) < n:
+    #     new_points.append([new_points[-1][0], new_points[-1][1]])
+
     return new_points
 
 
@@ -50,11 +46,9 @@ def rotate_to_zero(points):
     :return: array of coordinates after applying rotation
     """
 
-    centroid_x, centroid_y = get_centroid(np.array(points))
+    centroid_x, centroid_y = get_centroid(points)
     angle = math.atan2(centroid_y - points[0][1], centroid_x - points[0][0])
-    # Not sure if rotate by angle or -angle...paper says -angle but it rotates anticlockwise
     new_points = rotate_by(points, -angle, [centroid_x, centroid_y])
-    # new_points.insert(0, [centroid_x, centroid_y])
     return new_points
 
 
@@ -115,17 +109,22 @@ def get_centroid(points):
     :param points: array of coordinates
     :return: x, y coordinate of centroid
     """
-    
+
     n = len(points)
-    sum_x_coords = np.sum(points[:][0])
-    sum_y_coords = np.sum(points[:][1])
-    return sum_x_coords / n, sum_y_coords / n
+    sum_x = 0
+    sum_y = 0
+    for point in points:
+        sum_x = sum_x + point[0]
+        sum_y = sum_y + point[1]
+
+    return sum_x / n, sum_y / n
 
 
-def scale_to_square(points):
+def scale_to_square(points, square_size):
     """
     Method to scale the points
     :param points: array of coordinates , size of the square.
+    :param square_size: size of the bounding box to be scaled to
     :return: new points as an array after scaling
     """
     maximum_x, maximum_y = np.max(points, 0)
@@ -140,13 +139,12 @@ def scale_to_square(points):
         q = np.array([0.,0.])
         q[0] = point[0] * (square_size / box_width)
         q[1] = point[1] * (square_size / box_height)
-        new_points = np.append(new_points, [q] , 0)
+        new_points = np.append(new_points, [q], 0)
     
     return new_points[1:]
 
 
 def translate_to_origin(points):
-    
     """
     Method to translate the points to origin
     :param points: array of coordinates
@@ -155,32 +153,34 @@ def translate_to_origin(points):
 
     centroid_x, centroid_y = get_centroid(np.array(points))
     # centroid = np.array([centroid_x,centroid_y])
-    new_points = np.zeros((1,2))
-
-    # new_points = points-centroid
+    new_points = np.zeros((1, 2))
 
     for point in points:
         q = np.array([0.,0.])
         q[0] = point[0] - centroid_x
         q[1] = point[1] - centroid_y
-        new_points = np.append(new_points, [q] , 0)
+        new_points = np.append(new_points, [q], 0)
     
     return new_points[1:]
 
 
-def recognize(points, n):
-    
+def recognize(points, n, angle_range, angle_step, phi, square_size):
+
     """
     Method to match the set of points against the template
     :param points: array of coordinates
     :param n : number of points
+    :param angle_step:
+    :param angle_range:
     :param templates : all templates
+    :param phi:
+    :param square_size:
     :return: chosen template and score
     """ 
     number_of_points = n
-    points = resample_points(list(points) , number_of_points)
+    points = resample_points(list(points), number_of_points)
     points = rotate_to_zero(list(points))
-    points = scale_to_square(list(points))
+    points = scale_to_square(list(points), square_size=square_size)
     points = translate_to_origin(list(points))
 
     b = float('inf')
@@ -190,12 +190,12 @@ def recognize(points, n):
     for template in templates:
         template_points = resample_points(template.points, number_of_points)
         template_points = rotate_to_zero(template_points)
-        template_points = scale_to_square(template_points)
+        template_points = scale_to_square(template_points, square_size=square_size)
         template_points = translate_to_origin(template_points)
         
-        distance = distance_at_best_angle(points, template_points, -angle_range, angle_range, angle_step)
+        distance = distance_at_best_angle(points, template_points, -angle_range, angle_range, angle_step, phi)
 
-        if distance < b :
+        if distance < b:
             b = distance
             chosen_template = template
     
@@ -204,7 +204,7 @@ def recognize(points, n):
     return chosen_template, score
 
 
-def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step):
+def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):
     x1 = phi * angle_a + (1 - phi) * angle_b
     f1 = distance_at_angle(points, template_pts, x1)
     x2 = (1 - phi) * angle_a + phi * angle_b
@@ -238,10 +238,10 @@ def distance_at_angle(points, template_pts, angle):
 
 
 def path_distance(path1, path2):
-    print("len path 1", len(path1))
-    print("len path 2", len(path2))
-    if len(path1) != len(path2):
-        print("Not possible, check the paths")  
+    # print("len path 1", len(path1))
+    # print("len path 2", len(path2))
+    # if len(path1) != len(path2):
+    #     print("Not possible, check the paths")
     d = 0
     for p_1, p_2 in zip(path1, path2):
         d = d + get_distance([p_1, p_2])
