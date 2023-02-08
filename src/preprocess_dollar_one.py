@@ -117,8 +117,8 @@ def get_centroid(points):
     """
     
     n = len(points)
-    sum_x_coords = np.sum(points[:, 0])
-    sum_y_coords = np.sum(points[:, 1])
+    sum_x_coords = np.sum(points[:][0])
+    sum_y_coords = np.sum(points[:][1])
     return sum_x_coords / n, sum_y_coords / n
 
 def scale_to_square(points):
