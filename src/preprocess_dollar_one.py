@@ -142,7 +142,11 @@ def translate_to_origin(points):
     """
 
     centroid_x, centroid_y = get_centroid(np.array(points))
+    # centroid = np.array([centroid_x,centroid_y])
     new_points = np.zeros((1,2))
+
+    # new_points = points-centroid
+
 
     for point in points:
         q = np.array([0.,0.])
@@ -151,6 +155,5 @@ def translate_to_origin(points):
         new_points = np.append(new_points, [q] , 0)
     
     return new_points[1:]
-
 
 
