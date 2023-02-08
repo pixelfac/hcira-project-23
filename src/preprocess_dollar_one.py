@@ -1,6 +1,5 @@
 import math
 import numpy as np
-from numpy.linalg import linalg
 from unistroke import templates
 
 
@@ -32,9 +31,6 @@ def resample_points(points, n):
         else:
             d = d + dist
         i = i + 1
-
-    # if len(new_points) < n:
-    #     new_points.append([new_points[-1][0], new_points[-1][1]])
 
     return new_points
 
@@ -128,19 +124,19 @@ def scale_to_square(points, square_size):
     :return: new points as an array after scaling
     """
     maximum_x, maximum_y = np.max(points, 0)
-    minimum_x, minimum_y = np.min(points, 0) 
+    minimum_x, minimum_y = np.min(points, 0)
 
     box_width = maximum_x - minimum_x
     box_height = maximum_y - minimum_y
 
-    new_points = np.zeros((1,2))
+    new_points = np.zeros((1, 2))
 
     for point in points:
-        q = np.array([0.,0.])
+        q = np.array([0., 0.])
         q[0] = point[0] * (square_size / box_width)
         q[1] = point[1] * (square_size / box_height)
         new_points = np.append(new_points, [q], 0)
-    
+
     return new_points[1:]
 
 
@@ -152,31 +148,28 @@ def translate_to_origin(points):
     """
 
     centroid_x, centroid_y = get_centroid(np.array(points))
-    # centroid = np.array([centroid_x,centroid_y])
     new_points = np.zeros((1, 2))
 
     for point in points:
-        q = np.array([0.,0.])
+        q = np.array([0., 0.])
         q[0] = point[0] - centroid_x
         q[1] = point[1] - centroid_y
         new_points = np.append(new_points, [q], 0)
-    
+
     return new_points[1:]
 
 
 def recognize(points, n, angle_range, angle_step, phi, square_size):
-
     """
     Method to match the set of points against the template
     :param points: array of coordinates
     :param n : number of points
-    :param angle_step:
-    :param angle_range:
-    :param templates : all templates
-    :param phi:
-    :param square_size:
+    :param angle_step: delta by which angle will be changed
+    :param angle_range: range of acceptable angle
+    :param phi: constant value
+    :param square_size: size of scaled bounding box
     :return: chosen template and score
-    """ 
+    """
     number_of_points = n
     points = resample_points(list(points), number_of_points)
     points = rotate_to_zero(list(points))
@@ -192,19 +185,30 @@ def recognize(points, n, angle_range, angle_step, phi, square_size):
         template_points = rotate_to_zero(template_points)
         template_points = scale_to_square(template_points, square_size=square_size)
         template_points = translate_to_origin(template_points)
-        
+
         distance = distance_at_best_angle(points, template_points, -angle_range, angle_range, angle_step, phi)
 
         if distance < b:
             b = distance
             chosen_template = template
-    
-    score = 1 - b /(0.5 * np.sqrt(square_size**2 + square_size**2))
+
+    score = 1 - b / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
 
     return chosen_template, score
 
 
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):
+    """
+    Method to find the best match b/w stored templates and drawn gesture
+    :param points: array coordinates of drawn gesture
+    :param template_pts: array coordinates of stored templates
+    :param angle_a: lower threshold of angle
+    :param angle_b: upper threshold of angle
+    :param angle_step: delta of angle change
+    :param phi: constant value
+    :return: returns min distance
+    """
+
     x1 = phi * angle_a + (1 - phi) * angle_b
     f1 = distance_at_angle(points, template_pts, x1)
     x2 = (1 - phi) * angle_a + phi * angle_b
@@ -226,18 +230,30 @@ def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, p
 
 
 def distance_at_angle(points, template_pts, angle):
-    
-    x, y = get_centroid(list(points))
-    
-    centroid = list([x, y])
+    """
+    Method to find distance b/w gesture and a template at certain angle
+    :param points: array of coordinates for drawn gesture
+    :param template_pts: array of points for the stored template
+    :param angle: angle at which distance to be checked
+    :return: distance b/w gesture and template points at specified angle
+    """
 
+    x, y = get_centroid(list(points))
+    centroid = list([x, y])
     new_points = rotate_by(points, angle, centroid)
     d = path_distance(new_points, template_pts)
-    
+
     return d
 
 
 def path_distance(path1, path2):
+    """
+    Method to get the distance b/w 2 paths
+    :param path1: array of points for 1st path
+    :param path2: array of points for 2nd path
+    :return: distance b/w 2 paths
+    """
+
     # print("len path 1", len(path1))
     # print("len path 2", len(path2))
     # if len(path1) != len(path2):
