@@ -1,6 +1,5 @@
 import tkinter as tk
 import numpy as np
-from unistroke import templates
 import preprocess_dollar_one as dollar1
 
 
