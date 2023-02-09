@@ -1,6 +1,7 @@
 import tkinter as tk
 import numpy as np
 import preprocess_dollar_one as dollar1
+from preprocess_dollar_one import square_size, angle_range, angle_step, phi
 
 
 # global variables and constants

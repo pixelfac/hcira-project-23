@@ -2,6 +2,24 @@ import math
 import numpy as np
 from unistroke import templates
 
+# global variables and constants
+
+square_size = 250
+angle_range = 45
+angle_step = 2
+phi = 0.5 * (-1 + np.sqrt(5))
+
+
+def preprocess_points(points):
+    points = resample_points(points, 64)
+    points = rotate_to_zero(points)
+    points = scale_to_square(points, square_size=square_size)
+    points = translate_to_origin(points)
+
+    return points
+
+
+
 
 def resample_points(points, n):
     """
@@ -181,12 +199,7 @@ def recognize(points, n, angle_range, angle_step, phi, square_size):
     chosen_template = None
 
     for template in templates:
-        template_points = resample_points(template.points, number_of_points)
-        template_points = rotate_to_zero(template_points)
-        template_points = scale_to_square(template_points, square_size=square_size)
-        template_points = translate_to_origin(template_points)
-
-        distance = distance_at_best_angle(points, template_points, -angle_range, angle_range, angle_step, phi)
+        distance = distance_at_best_angle(points, template.points, -angle_range, angle_range, angle_step, phi)
 
         if distance < b:
             b = distance
@@ -263,3 +276,8 @@ def path_distance(path1, path2):
         d = d + get_distance([p_1, p_2])
 
     return d / len(path1)
+
+
+# preprocess templates
+for template in templates:
+    template.points = preprocess_points(template.points)
