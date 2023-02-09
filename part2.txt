@@ -7,7 +7,7 @@ Shashanka Bhat
 
 a) The points for each unistroke are stored in a list of pairs while the line is being drawn. The variable is the 'coords' object in main.py. coordinate pairs are added to this object on lines 18 and 28 inside the 'init_coords' and 'draw_line' functions respectively.
 
-b) Templates are parsed and stored in the 'unistroke.py' file. 2  helper classes (Point, Unistroke) are created to allow parsing the original javascript code with minimal changes. A Unistroke object is created for each template, and then added to a list of templates to be imported where necessary.
+b) Templates are parsed and stored in the 'unistroke.py' file. 2  helper classes (Point, Unistroke) are created to allow parsing the original javascript code with minimal changes. A Unistroke object is created for each template, and then added to a list of templates to be imported where necessary. The templates are process according to the $1 algorithm on instantiation of 'preprocess_dollar_one.py'
 
 c) The $1 algorithm is implemented largely in the 'preprocess_dollar_one.py' file. The 'recognise' function is called from main.py on line 41, which then uses all of the other functions in preprocess_dollar_one.py as helper functions to complete all of the steps for the $1 algorithm.
 
