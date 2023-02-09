@@ -42,8 +42,6 @@ def process_line(event):
     template, score = dollar1.recognize(coords, 64, angle_range=angle_range, angle_step=angle_step,
                                         phi=phi, square_size=square_size)
     label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
-    # print(template.label)
-    # print(score)
 
 
 # Clear the canvas
@@ -75,7 +73,7 @@ label_recognised_candidate.place(y=65, x=0)
 win.title("$1 gesture recognition")
 win.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
 win.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
-win.bind('<ButtonRelease-1>', reset_canvas_coords)  # resets line drawing variables
+win.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
 win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coords list
 win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
 
