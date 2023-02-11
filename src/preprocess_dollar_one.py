@@ -2,6 +2,18 @@ import math
 import numpy as np
 from unistroke import templates
 
+"""
+Project 1 for HCIRA, Spring '23
+
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
+
+Description:
+This file contains the functionality for the $1 gesture recognition algorithm
+"""
+
 # global variables and constants
 
 square_size = 250

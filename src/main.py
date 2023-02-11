@@ -3,13 +3,19 @@ import numpy as np
 import preprocess_dollar_one as dollar1
 from preprocess_dollar_one import square_size, angle_range, angle_step, phi
 
+"""
+Project 1 for HCIRA, Spring '23
 
-# global variables and constants
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
 
-square_size = 250
-angle_range = 45
-angle_step = 2
-phi = 0.5 * (-1 + np.sqrt(5))
+Description:
+This file creates and controls the application window that
+the user interacts with, recording gestures and outputting the results
+of the implemented gesture recognition algorithms
+"""
 
 
 # Initialise coords list with first point

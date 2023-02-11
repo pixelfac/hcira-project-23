@@ -1,3 +1,16 @@
+"""
+Project 1 for HCIRA, Spring '23
+
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
+
+Description:
+This file contains the dataclasses and initialization
+for the template gestures
+"""
+
 class Point:
     def __init__(self, x, y):
         self.x = x
