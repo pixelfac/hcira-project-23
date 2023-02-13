@@ -84,3 +84,45 @@ win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coo
 win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
 
 win.mainloop()  # start main event loop
+
+
+#
+# # Testing methods
+# win_res = tk.Tk()  # init window
+# win_res.geometry("400x400")  # set window dimensions
+#
+# # Canvas
+# canvas_res = tk.Canvas(win_res, width=400, height=400, highlightthickness=1, highlightbackground="black")
+# # place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
+# canvas_res.place(relx=0.5, rely=0.5, anchor="center")
+# canvas_res.old_coords = None
+# coords_res = dollar1.resample_points(coords, 64)
+# line_res = [(coords_res[n][0], coords_res[n][1]) for n in range(0, len(coords_res))]
+# canvas_res.create_line(line_res)
+# win_res.mainloop()
+
+# win_rot = tk.Tk()  # init window
+# win_rot.geometry("400x400")  # set window dimensions
+#
+# # Canvas
+# canvas_rot = tk.Canvas(win_rot, width=400, height=400, highlightthickness=1, highlightbackground="black")
+# # place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
+# canvas_rot.place(relx=0.5, rely=0.5, anchor="center")
+# canvas_rot.old_coords = None
+# coords_rot = dollar1.rotate_to_zero(coords)
+# line_rot = [(coords_rot[n][0], coords_rot[n][1]) for n in range(0, len(coords_rot))]
+# canvas_rot.create_line(line_rot)
+# win_rot.mainloop()
+
+# win_sc = tk.Tk()  # init window
+# win_sc.geometry("400x400")  # set window dimensions
+#
+# # Canvas
+# canvas_sc = tk.Canvas(win_sc, width=400, height=400, highlightthickness=1, highlightbackground="black")
+# # place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
+# canvas_sc.place(relx=0.5, rely=0.5, anchor="center")
+# canvas_sc.old_coords = None
+# coords_sc = dollar1.scale_to_square(coords, 300)
+# line_sc = [(coords_sc[n][0], coords_sc[n][1]) for n in range(0, len(coords_sc))]
+# canvas_sc.create_line(line_sc)
+# win_sc.mainloop()

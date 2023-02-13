@@ -16,7 +16,7 @@ This file contains the functionality for the $1 gesture recognition algorithm
 
 # global variables and constants
 
-square_size = 250
+square_size = 300
 angle_range = 45
 angle_step = 2
 phi = 0.5 * (-1 + np.sqrt(5))
