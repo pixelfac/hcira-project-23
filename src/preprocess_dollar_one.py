@@ -62,7 +62,7 @@ def resample_points(points, n):
 
     # Check if size of new array is exactly equal to required n. If not add the last point again to the array
     if len(new_points) < n:
-        new_points.append([new_points[-1, 0], new_points[-1, 1]])
+        new_points.append([new_points[-1][0], new_points[-1][1]])
 
     return new_points
 
@@ -144,8 +144,9 @@ def get_centroid(points):
     # for point in points:
     #     sum_x = sum_x + point[0]
     #     sum_y = sum_y + point[1]
-    sum_x_coords = np.sum(points[:, 0])
-    sum_y_coords = np.sum(points[:, 1])
+    temp_points = np.array(points)
+    sum_x_coords = np.sum(temp_points[:, 0])
+    sum_y_coords = np.sum(temp_points[:, 1])
 
     # return sum_x / n, sum_y / n
     return sum_x_coords / n, sum_y_coords / n
