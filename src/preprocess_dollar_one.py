@@ -15,7 +15,6 @@ This file contains the functionality for the $1 gesture recognition algorithm
 """
 
 # global variables and constants
-
 square_size = 300
 angle_range = 45
 angle_step = 2
@@ -23,6 +22,11 @@ phi = 0.5 * (-1 + np.sqrt(5))
 
 
 def preprocess_points(points):
+    """
+    takes in a list of Points and returns that list after
+    all preprocessing steps: resample, rotate, scale, and translate
+    :param points: All points itendified from user's gesture
+    """
     points = resample_points(points, 64)
     points = rotate_to_zero(points)
     points = scale_to_square(points, square_size=square_size)
@@ -195,7 +199,7 @@ def translate_to_origin(points):
     return new_points[1:]
 
 
-def recognize(points, n, angle_range, angle_step, phi, square_size):
+def recognize(points, n):
     """
     Method to match the set of points against the template
     :param points: array of coordinates
@@ -207,10 +211,7 @@ def recognize(points, n, angle_range, angle_step, phi, square_size):
     :return: chosen template and score
     """
     number_of_points = n
-    points = resample_points(list(points), number_of_points)
-    points = rotate_to_zero(list(points))
-    points = scale_to_square(list(points), square_size=square_size)
-    points = translate_to_origin(list(points))
+    points = preprocess_points(points)
 
     b = float('inf')
 
@@ -257,6 +258,7 @@ def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, p
             f1 = f2
             x2 = (1 - phi) * angle_a + phi * angle_b
             f2 = distance_at_angle(points, template_pts, x2)
+            
     return min(f1, f2)
 
 

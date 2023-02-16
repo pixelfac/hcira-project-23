@@ -44,8 +44,7 @@ def process_line(event):
     reset_canvas_coords(event)
 
     # $1 algorithm
-    template, score = recognize(coords, 64, angle_range=angle_range, angle_step=angle_step,
-                                        phi=phi, square_size=square_size)
+    template, score = recognize(coords, 64)
     label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
 
 
