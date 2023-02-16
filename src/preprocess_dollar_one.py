@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from unistroke import templates
+from templates import templates
 
 """
 Project 1 for HCIRA, Spring '23
