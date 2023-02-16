@@ -1,7 +1,6 @@
 import tkinter as tk
 import numpy as np
-import preprocess_dollar_one as dollar1
-from preprocess_dollar_one import square_size, angle_range, angle_step, phi
+from preprocess_dollar_one import square_size, angle_range, angle_step, phi, recognize
 
 """
 Project 1 for HCIRA, Spring '23
@@ -45,7 +44,7 @@ def process_line(event):
     reset_canvas_coords(event)
 
     # $1 algorithm
-    template, score = dollar1.recognize(coords, 64, angle_range=angle_range, angle_step=angle_step,
+    template, score = recognize(coords, 64, angle_range=angle_range, angle_step=angle_step,
                                         phi=phi, square_size=square_size)
     label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
 
