@@ -55,6 +55,10 @@ def clear_canvas(event):
     coords.clear()  # empty coords list
 
 
+###################
+## Program Start ##
+###################
+
 win = tk.Tk()  # init window
 win.geometry("600x600")  # set window dimensions
 
@@ -68,14 +72,18 @@ coords = []  # store coordinates
 # Labels
 label_left_click = tk.Label(text="Click left mouse button to start drawing on canvas. Drag to draw gesture")
 label_left_click.place(y=5, x=0)
+
 label_right_click = tk.Label(text="Click right mouse button to clear the canvas")
 label_right_click.place(y=25, x=0)
+
 label_current_coord = tk.Label(text="")
 label_current_coord.place(y=45, x=0)
+
 label_recognised_candidate = tk.Label(text="")
 label_recognised_candidate.place(y=65, x=0)
 
 win.title("$1 gesture recognition")
+# set keybinds
 win.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
 win.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
 win.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
