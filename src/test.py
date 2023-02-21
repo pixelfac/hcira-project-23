@@ -58,3 +58,4 @@ for user in range(0,10):
         recognize_acc[user][gesture] = recognize_score[user][gesture] / 100
 
 # output final avg acc per user
+print(recognize_acc)
