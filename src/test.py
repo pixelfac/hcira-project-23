@@ -33,7 +33,7 @@ for user in range(0,10):
 
                 # first num_examples elements from sample
                 example = sample
-                examples.append(example)
+                examples.extend(example)
 
             for gesture in range(0,16):
                 pass
