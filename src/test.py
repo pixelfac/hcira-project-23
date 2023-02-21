@@ -13,16 +13,19 @@ for each user U = 1 to 10
 report final average per-user accuracy
 '''
 
-gestures = []
+'''
+data is list of list of lists, accessing first by user, then by gesture,
+then you have a list of all examples of that gesture by that user
+'''
 
-for user in range(1,10):
-    for example in range(1,9):
-        for i in range(1,100):
-            for gesture in gestures:
+for user in range(0,10):
+    for example in range(0,9):
+        for i in range(0,10):
+            for gesture in data[user]:
                 pass
-                # choose e templates randomly from data[user][gesture]
+                # choose example templates randomly from data[user][gesture]
                 # choose 1 candidate randomly from data[user][gesture] that's not 
-            for candidate in range(1,gesture):
+            for gesture in range(0,16):
                 pass
                 # recognize candidate against [example][gesture] template   
                 # if recognized:
