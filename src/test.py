@@ -24,7 +24,8 @@ recognize_score is list of list of numbers, tracking the recognize score per use
 recognize_acc is list of list of numbers, tracking %correct per user, per gesture
 '''
 # number ot times to tests each group
-iteractions = 10
+iterations = 10
+
 
 for user in range(0,10):
     for num_examples in range(1,10):
@@ -49,7 +50,7 @@ for user in range(0,10):
             for gesture in range(0,16):
                 pass
                 # recognize candidate against [example][gesture] template 
-                template, score = recognize(candidates[gesture], examples[gesture], 64)
+                template, score = recognize(candidates[gesture], 64, examples[gesture])
                 
                 if template.label == candidate.label:
                     recognize_score[user][gesture] += 1
