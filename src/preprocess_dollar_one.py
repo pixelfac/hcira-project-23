@@ -1,6 +1,6 @@
 import math
 import numpy as np
-from templates import templates
+from templates import templates as default_templates
 
 """
 Project 1 for HCIRA, Spring '23
@@ -199,11 +199,12 @@ def translate_to_origin(points):
     return new_points[1:]
 
 
-def recognize(points, n):
+def recognize(points, n, templates=default_templates):
     """
     Method to match the set of points against the template
-    :param points: array of coordinates
+    :param points: list of coordinates
     :param n : number of points
+    :param templates: list of Unistroke objects
     :return: chosen template and score
     """
     number_of_points = n
@@ -212,6 +213,10 @@ def recognize(points, n):
     b = float('inf')
 
     chosen_template = None
+    
+    if templates is default_templates:
+        for template in templates:
+            template.points = preprocess_points(template.points)
 
     for template in templates:
         distance = distance_at_best_angle(points, template.points, -angle_range, angle_range, angle_step, phi)
@@ -295,5 +300,5 @@ def path_distance(path1, path2):
 
 
 # preprocess templates
-for template in templates:
+for template in default_templates:
     template.points = preprocess_points(template.points)
