@@ -204,10 +204,6 @@ def recognize(points, n):
     Method to match the set of points against the template
     :param points: array of coordinates
     :param n : number of points
-    :param angle_step: delta by which angle will be changed
-    :param angle_range: range of acceptable angle
-    :param phi: constant value
-    :param square_size: size of scaled bounding box
     :return: chosen template and score
     """
     number_of_points = n
