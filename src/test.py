@@ -1,3 +1,5 @@
+import random
+
 '''
 for each user U = 1 to 10 
   for each example E = 1 to 9 
@@ -19,12 +21,22 @@ then you have a list of all examples of that gesture by that user
 '''
 
 for user in range(0,10):
-    for example in range(0,9):
+    for num_examples in range(0,9):
         for i in range(0,10):
-            for gesture in data[user]:
+            candidate = []
+            examples = []
+            for gesture in data[user]: # gesture is list of all examples from that user and gesture
                 pass
-                # choose example templates randomly from data[user][gesture]
-                # choose 1 candidate randomly from data[user][gesture] that's not 
+                # sample is random list of num_examples+1 elements randomly picked from gesture
+                sample = random.sample(gesture, num_examples+1)
+                # last element in sample
+                candidate = sample.pop()
+                # first num_examples elements from sample
+                if len(sample) != num_examples:
+                    print("examples list not correct size")
+                examples = sample
+                # examples num_examples templates randomly from data[user][gesture]
+                # choose 1 candidate randomly from data[user][gesture] that's not in examples
             for gesture in range(0,16):
                 pass
                 # recognize candidate against [example][gesture] template   
