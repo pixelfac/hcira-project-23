@@ -1,4 +1,5 @@
 import random
+from preprocess_dollar_one import recognize
 
 '''
 for each user U = 1 to 10 
@@ -17,12 +18,17 @@ report final average per-user accuracy
 
 '''
 data is list of list of lists, accessing first by user, then by gesture,
-then you have a list of all examples of that gesture by that user
+then you have a list of all examples of that gesture by that user, where example is a Unistroke object
+
+recognize_score is list of list of numbers, tracking the recognize score per user, per gesture
+recognize_acc is list of list of numbers, tracking %correct per user, per gesture
 '''
+# number ot times to tests each group
+iteractions = 10
 
 for user in range(0,10):
-    for num_examples in range(0,9):
-        for i in range(0,10):
+    for num_examples in range(1,10):
+        for i in range(0,iterations):
             candidates = []
             examples = []
             for gesture in data[user]: # gesture is list of all examples from that user and gesture
@@ -35,15 +41,19 @@ for user in range(0,10):
 
                 if len(sample) != num_examples: # test for correctness
                     print("examples list not correct size")
-                    
+
                 # first num_examples elements from sample
                 example = sample
                 examples.append(example)
 
             for gesture in range(0,16):
                 pass
-                # recognize candidate against [example][gesture] template   
-                # if recognized:
-                    # recognize score for [user][gesture] += 1
+                # recognize candidate against [example][gesture] template 
+                template, score = recognize(candidates[gesture], examples[gesture], 64)
+                
+                if template.label == candidate.label:
+                    recognize_score[user][gesture] += 1
         # avg accuracy [user][gesture] = recognize score [user][gesture] / 100
+        recognize_acc[user][gesture] = recognize_score[user][gesture] / 100
+
 # output final avg acc per user
