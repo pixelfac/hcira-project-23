@@ -29,6 +29,7 @@ import os
 import re
 # import xml.dom.minidom
 import xml.etree.ElementTree as ET
+from preprocess_dollar_one import preprocess_points
 
 data = {}
 
@@ -92,7 +93,8 @@ for user_index in range(0, len(users)):
         points = []
         for point in document.getroot():
             attributes = point.attrib
-            points.append([attributes['X'], attributes['Y']])
+            # print(type(attributes['X']))
+            points.append([int(attributes['X']), int(attributes['Y'])])
 
         # if gesture_index == 0:
         #     data[user][gesture_name] = points
@@ -100,6 +102,8 @@ for user_index in range(0, len(users)):
         #     temp_points = data[user][gesture_name]
         #     temp_points.append(points)
         #     data[user][gesture_name] = temp_points
+        points = preprocess_points(points)
+        # print("--------------- length: " + str(len(points)) + " -----------------")
 
         if gesture_name in data[user]:
             # print("length: " + str(len(points)) + ", name: " + gesture_name)
