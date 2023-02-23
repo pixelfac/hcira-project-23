@@ -6,6 +6,11 @@ Nathan Harris
 Shashanka Bhat
 
 a) read dataset
+We have stored the downloaded xml data in src folder.
+The code for parsing the xml data is stored in 'load_data.py' file.
+We use ElementTree provided by python to parse the xml files.
+A dictionary is created where the 1st level keys are for each user. The value for each user key is again a dictionary with the gesture labels as keys and the corresponding value is an array of Unistroke objects for each instance of the gesture for that user. The unistroke object is used from the previous part of the project which handles the labels and points data of the gestures.
+Each gesture data is preprocessed and stored in the data.
 
 b) Our recognizer from previous parts was very easy to modify to fit this part. The largest change me made to our recognize() function inside 'preprocess_dollar_one.py' was to change the output to be a list of pairs of the best results and scores from the recognition, rather than just the best result and its score
 
