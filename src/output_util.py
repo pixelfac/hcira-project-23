@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 
 template_dataframe =  pd.DataFrame ( 
@@ -78,7 +80,8 @@ def convert_dataframe_to_csv (dataframe, filepath):
     :param filepath : Path of the current working directory
     :return :
     """
-    output_file_path = filepath + "\export_dataframe.csv"
+    # output_file_path = filepath + "\export_dataframe.csv"
+    output_file_path = os.getcwd() + "\\output.csv"
     dataframe.to_csv(output_file_path, index=False, header=True)
 
     #path os library  can be used for getthing the
@@ -93,5 +96,6 @@ def add_list_to_dataframe(dataframe, row):
     temp_dataframe = dataframe.copy()
 
     temp_dataframe.loc[len(temp_dataframe)] = row
+    temp_dataframe.concat
 
     return temp_dataframe
