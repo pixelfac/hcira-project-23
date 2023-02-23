@@ -51,7 +51,7 @@ for x in directory_contents:
 
 gestures = []
 for user in users:
-    print("user: " + user)
+    # print("user: " + user)
     path = os.getcwd() + "\\xml\\xml_logs\\" + user + "\\medium\\"
     # print(path)
     # print(os.listdir(path))
