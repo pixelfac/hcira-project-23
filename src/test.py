@@ -2,6 +2,7 @@ import random
 from preprocess_dollar_one import recognize
 from load_data import data
 import re
+from output_util import create_empty_dataframe, add_list_to_dataframe, convert_dataframe_to_csv
 
 
 '''
@@ -16,6 +17,8 @@ recognize_acc is list of list of numbers, tracking %correct per user, per gestur
 iterations = 1
 users = list(data.keys())
 recognize_score = {}
+rows = []
+
 for user_index in range(0, len(data.keys())):
     recognize_score[users[user_index]] = {}
     for gesture_index in data[users[0]].keys():
@@ -58,6 +61,7 @@ for user_index in range(0,1):
                 examples.extend(sample)
 
             for candidate in candidates:
+                temp_row = [users[user_index]]
                 # template, score = recognize(candidate.points, 64, examples)
                 scores = recognize(candidate.points, 64, examples)
                 # print(template.label + ", actual: " + candidate.label)
@@ -68,7 +72,19 @@ for user_index in range(0,1):
                 template_label = template[0:template_digit_index.start()]
                 candidate_digit_index = re.search(r"\d", candidate.label)
                 candidate_label = candidate.label[0:candidate_digit_index.start()]
-                print(template_label + ", actual: " + candidate_label)
+                temp_row.append(candidate_label)
+                temp_row.append(str(i+1))
+                temp_row.append(str(num_examples * 16))
+                example_arr = []
+                for example in examples:
+                    example_arr.append(example.label)
+                temp_row.append(example_arr)
+                temp_row.append([scores[0][0], scores[0][1]])
+                score_arr = []
+                for score in scores:
+                    score_arr.append([score[0], score[1]])
+                temp_row.append(score_arr)
+                # print(template_label + ", actual: " + candidate_label)
                 # if template.label == candidate.label:
                 if template_label == candidate_label:
                     # print("CORRECT")
@@ -77,6 +93,7 @@ for user_index in range(0,1):
                         recognize_score[users[user_index]][gesture_index_temp] = \
                             recognize_score[users[user_index]][gesture_index_temp] + 1.0
                     # recognize_score[users[user_index]][gesture] = recognize_score[users[user_index]][gesture] + 1.0
+                rows.append(temp_row)
 
             # for gesture in range(0,16):
             #     pass
@@ -97,5 +114,13 @@ for user_index in range(0,1):
 # print(recognize_score[users[0]].keys())
 print(recognize_score[users[0]])
 
-for users in data.keys():
-    print(recognize_score[users])
+# for users in data.keys():
+#     print(recognize_score[users])
+print(len(rows))
+print(rows[0])
+
+df = create_empty_dataframe()
+for row in rows:
+    df = add_list_to_dataframe(df, row)
+
+convert_dataframe_to_csv(df)
