@@ -1,6 +1,7 @@
 import random
 from preprocess_dollar_one import recognize
 from load_data import data
+import re
 
 
 '''
@@ -30,7 +31,7 @@ for user_index in range(0,1):
         # pass
     # else:
     #     recognize_score[users[user_index]] = {}
-
+    user_accuracy = []
     for num_examples in range(1,10):
         print("num_examples: " + str(num_examples))
         for i in range(0,iterations):
@@ -57,14 +58,24 @@ for user_index in range(0,1):
                 examples.extend(sample)
 
             for candidate in candidates:
-                template, score = recognize(candidate.points, 64, examples)
+                # template, score = recognize(candidate.points, 64, examples)
+                scores = recognize(candidate.points, 64, examples)
                 # print(template.label + ", actual: " + candidate.label)
-
-                if template.label == candidate.label:
+                template = scores[0][0]
+                # template_digit_index = re.search(r"\d", template.label)
+                template_digit_index = re.search(r"\d", template)
+                # template_label = template.label[0:template_digit_index.start()]
+                template_label = template[0:template_digit_index.start()]
+                candidate_digit_index = re.search(r"\d", candidate.label)
+                candidate_label = candidate.label[0:candidate_digit_index.start()]
+                print(template_label + ", actual: " + candidate_label)
+                # if template.label == candidate.label:
+                if template_label == candidate_label:
                     # print("CORRECT")
                     # print(recognize_score[users[user_index]][gesture])
                     for gesture_index_temp in data[users[user_index]]:
-                        recognize_score[users[user_index]][gesture_index_temp] = recognize_score[users[user_index]][gesture_index_temp] + 1.0
+                        recognize_score[users[user_index]][gesture_index_temp] = \
+                            recognize_score[users[user_index]][gesture_index_temp] + 1.0
                     # recognize_score[users[user_index]][gesture] = recognize_score[users[user_index]][gesture] + 1.0
 
             # for gesture in range(0,16):
@@ -77,7 +88,8 @@ for user_index in range(0,1):
         # avg accuracy [user][gesture] = recognize score [user][gesture] / 100
         # recognize_acc[user][gesture] = recognize_score[user][gesture] / 100
         for gesture_index_temp in data[users[user_index]]:
-            recognize_score[users[user_index]][gesture_index_temp] = recognize_score[users[user_index]][gesture_index_temp] / 10.0
+            recognize_score[users[user_index]][gesture_index_temp] = \
+                recognize_score[users[user_index]][gesture_index_temp] / 10.0
         # recognize_score[users[user_index]][gesture] = recognize_score[users[user_index]][gesture] / 10.0
 
 # output final avg acc per user
