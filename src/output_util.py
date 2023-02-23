@@ -71,10 +71,27 @@ def add_data_to_dataframe(dataframe , user, gesture_type, iteration_number, numb
         return "Error"  #can use raise exception for this, based on main function loop.
 
 
-def convert_dataframe_to_csv (dataframe):
+def convert_dataframe_to_csv (dataframe, filepath):
     """
     Utility Method to convert dataframe to csv
     :param dataframe: Final dataframe as pandas dataframe
+    :param filepath : Path of the current working directory
     :return :
     """
-    dataframe.to_csv(r'C:\export_dataframe.csv', index=False, header=True)
+    output_file_path = filepath + "\export_dataframe.csv"
+    dataframe.to_csv(output_file_path, index=False, header=True)
+
+    #path os library  can be used for getthing the
+
+def add_list_to_dataframe(dataframe, row):
+    """
+    Utility Method to add the result data to to the dataframe.
+    :param dataframe: The pandas dataframe to which the data points from the test needs to be appended as a new row
+    :param row : The entire row in the output in the form of list of lists
+    :return : Updated Pandas Dataframe
+    """
+    temp_dataframe = dataframe.copy()
+
+    temp_dataframe.loc[len(temp_dataframe)] = row
+
+    return temp_dataframe
