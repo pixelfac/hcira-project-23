@@ -87,7 +87,8 @@ for user_index in range(0, len(users)):
         document = ET.parse(gestures[user_index][gesture_index])
         gesture_name = document.getroot().attrib['Name']
         digit_index = re.search(r"\d", gesture_name)
-        gesture_name = gesture_name[0: digit_index.start()]
+        # gesture_name = gesture_name[0: digit_index.start()]
+        gesture_label = gesture_name[0: digit_index.start()]
         # print(gesture_name)
         # print(document.getroot().attrib['Name'])
 
@@ -110,16 +111,16 @@ for user_index in range(0, len(users)):
         # print("--------------- length: " + str(len(points)) + " -----------------")
         gesture_obj = Unistroke(label=gesture_name, points=points)
         gesture_obj.points = preprocess_points(gesture_obj.points)
-        if gesture_name in data[user]:
+        if gesture_label in data[user]:
             # print("length: " + str(len(points)) + ", name: " + gesture_name)
-            temp_points = data[user][gesture_name]
+            temp_points = data[user][gesture_label]
             # temp_points.append(points)
             temp_points.append(gesture_obj)
-            data[user][gesture_name] = temp_points
+            data[user][gesture_label] = temp_points
         else:
             # print("length: " + str(len(points)) + ", name: " + gesture_name)
             # data[user][gesture_name] = [points]
-            data[user][gesture_name] = [gesture_obj]
+            data[user][gesture_label] = [gesture_obj]
 
 
 print("data size----------------------------------")
