@@ -7,7 +7,7 @@ Shashanka Bhat
 
 a) read dataset
 
-b) connect to recognizer
+b) Our recognizer from previous parts was very easy to modify to fit this part. The largest change me made to our recognize() function inside 'preprocess_dollar_one.py' was to change the output to be a list of pairs of the best results and scores from the recognition, rather than just the best result and its score
 
 c) Iterating over the dataset and testing it occurs in 'test.py'. This file is entirely devoted to performing the testing and is modeled strongly after the pseudocode provided in the project instructions. Helper functions for managing the dataframe objects that store test data and running the $1 recognizer are imported, as well as the variable that holds all of that data after it has been processed from 'load_data.py'
 
