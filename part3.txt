@@ -12,3 +12,8 @@ b) Our recognizer from previous parts was very easy to modify to fit this part. 
 c) Iterating over the dataset and testing it occurs in 'test.py'. This file is entirely devoted to performing the testing and is modeled strongly after the pseudocode provided in the project instructions. Helper functions for managing the dataframe objects that store test data and running the $1 recognizer are imported, as well as the variable that holds all of that data after it has been processed from 'load_data.py'
 
 d) output result
+The utility methods for storing the output for each iteration and comverting it to csv is present in output_util.py. 
+An empty dataframe with column names is created in as a template in the output_util.py file. 
+create_empty_dataframe method can be used to create an empty from the main testing program. 
+add_list_to_dataframe method takes in an existing dataframe and a list of values as a parameter, this method adds the list to the exisiting datafrane and returns back the updated dataframe. 
+convert_dataframe_to_csv mathods takes in a dataframe and filelocation as a paramanter, this methods writes the dataframe to a csv file and stores the file in the given location.
