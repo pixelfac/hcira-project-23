@@ -1,0 +1,14 @@
+Project1 Part3 Submission for HCIRA, Spring '23
+
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
+
+a) read dataset
+
+b) connect to recognizer
+
+c) Iterating over the dataset and testing it occurs in 'test.py'. This file is entirely devoted to performing the testing and is modeled strongly after the pseudocode provided in the project instructions. Helper functions for managing the dataframe objects that store test data and running the $1 recognizer are imported, as well as the variable that holds all of that data after it has been processed from 'load_data.py'
+
+d) output result
