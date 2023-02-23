@@ -47,7 +47,7 @@ def resample_points(points, n):
     path_length = get_path_length(points)
     length = path_length / (n - 1)
     d = 0
-    temp_points = points[:]
+    temp_points = list(points[:])
     new_points = [points[0]]
     i = 1
     while i < len(temp_points):
@@ -214,21 +214,26 @@ def recognize(points, n, templates=default_templates):
 
     chosen_template = None
     
-    if templates is default_templates:
-        for template in templates:
-            template.points = preprocess_points(template.points)
-
+    # if templates is default_templates:
+    #     for template in templates:
+    #         template.points = preprocess_points(template.points)
+    scores = []
     for template in templates:
         distance = distance_at_best_angle(points, template.points, -angle_range, angle_range, angle_step, phi)
 
-        if distance < b:
-            b = distance
-            chosen_template = template
+        # if distance < b:
+        #     b = distance
+        #     chosen_template = template
+        score = 1 - distance / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
+        temp_score = [template.label, score]
+        scores.append(temp_score)
 
     score = 1 - b / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
-
-    return chosen_template, score
-
+    final_scores = sorted(scores, key=lambda x: x[1], reverse=True)
+    # for temp in final_scores:
+    #     print(temp[0] + ", " + str(temp[1]))
+    # return chosen_template, score
+    return final_scores
 
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):
     """
@@ -300,5 +305,5 @@ def path_distance(path1, path2):
 
 
 # preprocess templates
-for template in default_templates:
-    template.points = preprocess_points(template.points)
+# for template in default_templates:
+#     template.points = preprocess_points(template.points)
