@@ -233,6 +233,8 @@ def recognize(points, n, templates=default_templates):
     # for temp in final_scores:
     #     print(temp[0] + ", " + str(temp[1]))
     # return chosen_template, score
+    if len(final_scores >= 50):
+        final_scores = final_scores[0:50]
     return final_scores
 
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):
