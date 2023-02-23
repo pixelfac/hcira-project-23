@@ -30,6 +30,7 @@ import re
 # import xml.dom.minidom
 import xml.etree.ElementTree as ET
 from preprocess_dollar_one import preprocess_points
+from unistroke import Unistroke, Point
 
 data = {}
 
@@ -94,7 +95,9 @@ for user_index in range(0, len(users)):
         for point in document.getroot():
             attributes = point.attrib
             # print(type(attributes['X']))
-            points.append([int(attributes['X']), int(attributes['Y'])])
+            # points.append([int(attributes['X']), int(attributes['Y'])])
+            temp_point = Point(int(attributes['X']), int(attributes['Y']))
+            points.append(temp_point)
 
         # if gesture_index == 0:
         #     data[user][gesture_name] = points
@@ -102,19 +105,24 @@ for user_index in range(0, len(users)):
         #     temp_points = data[user][gesture_name]
         #     temp_points.append(points)
         #     data[user][gesture_name] = temp_points
-        points = preprocess_points(points)
-        # print("--------------- length: " + str(len(points)) + " -----------------")
 
+        # points = preprocess_points(points)
+        # print("--------------- length: " + str(len(points)) + " -----------------")
+        gesture_obj = Unistroke(label=gesture_name, points=points)
+        gesture_obj.points = preprocess_points(gesture_obj.points)
         if gesture_name in data[user]:
             # print("length: " + str(len(points)) + ", name: " + gesture_name)
             temp_points = data[user][gesture_name]
-            temp_points.append(points)
+            # temp_points.append(points)
+            temp_points.append(gesture_obj)
             data[user][gesture_name] = temp_points
         else:
             # print("length: " + str(len(points)) + ", name: " + gesture_name)
-            data[user][gesture_name] = [points]
+            # data[user][gesture_name] = [points]
+            data[user][gesture_name] = [gesture_obj]
+
 
 print("data size----------------------------------")
-print(len(data['user_0']['arrow'][7]))
+print(len(data['user_0']['arrow'][7].points))
 
 print(len(data['user_0']['triangle']))
