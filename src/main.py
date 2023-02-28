@@ -50,7 +50,8 @@ def reset_canvas_coords(event):
 
 def process_line(event):
     reset_canvas_coords(event)
-
+    if len(coords) < 2:
+        return
     # $1 algorithm
     template, score = recognize(coords, 64)
     label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
