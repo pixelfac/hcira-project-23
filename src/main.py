@@ -77,8 +77,11 @@ def next_button(event):
 def next_gesture_button(event):
     current_sample_number = 1
     current_shape_number += 1
-    current_shape = get_current_shape(current_shape_number)
 
+
+def update_label(current_shape_number):
+    current_shape = get_current_shape(current_shape_number)
+    
     label = f'Please draw the following shape : {current_shape}'
 
     return label
