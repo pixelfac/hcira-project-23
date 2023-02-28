@@ -61,6 +61,7 @@ def clear_canvas(event):
 win = tk.Tk()  # init window
 win.geometry("600x600")  # set window dimensions
 
+
 # Canvas
 canvas = tk.Canvas(win, width=600, height=400, highlightthickness=1, highlightbackground="black")
 # place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
@@ -82,6 +83,14 @@ label_recognised_candidate = tk.Label(text="")
 label_recognised_candidate.place(y=65, x=0)
 
 win.title("$1 gesture recognition")
+
+#creating buttons
+next_button = tk.Button(win, text="Next" , fg="red")
+next_button.pack(side=tk.LEFT)
+reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas)
+reset_button.pack(side=tk.RIGHT)
+
+
 # set keybinds
 win.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
 win.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
