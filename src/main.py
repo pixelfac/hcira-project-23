@@ -18,6 +18,8 @@ of the implemented gesture recognition algorithms
 """
 
 #global variables
+DATA_COLLECTION_MODE = True
+
 current_shape_number = 1
 current_sample_number = 1
 current_sample_list = []
@@ -52,6 +54,12 @@ def process_line(event):
     reset_canvas_coords(event)
     if len(coords) < 2:
         return
+    
+    # data collection
+    if DATA_COLLECTION_MODE:
+        save_to_xml(coords)
+        return
+
     # $1 algorithm
     template, score = recognize(coords, 64)
     label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
