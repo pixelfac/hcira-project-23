@@ -21,10 +21,16 @@ def get_current_shape(shape_number):
 
     return shapes[shape_number]
 
+def collect_points(user_points,point):
+    
+    user_points.append(point)
+
+    return user_points
+
 def add_samples(dataset, user, shape_number, samples):
 
-    dataset[str(user)] = {shape_number : samples}
+    shape = get_current_shape(shape_number)
+    dataset[str(user)][str(shape)] = samples
 
     return dataset
-
 

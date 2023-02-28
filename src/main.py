@@ -1,6 +1,7 @@
 import tkinter as tk
 import numpy as np
 from preprocess_dollar_one import square_size, angle_range, angle_step, phi, recognize
+from next_button import add_samples, get_current_shape
 
 """
 Project 1 for HCIRA, Spring '23
@@ -16,6 +17,13 @@ the user interacts with, recording gestures and outputting the results
 of the implemented gesture recognition algorithms
 """
 
+#global variables
+current_shape_number = 1
+current_sample_number = 1
+current_sample_list = []
+number_of_gestures = 16
+sample_size = 10
+dataset = {"user" : {"gesture" : [[0.0, 0.0]]}} #structure
 
 # Initialise coords list with first point
 def init_coords(event):
@@ -53,6 +61,27 @@ def clear_canvas(event):
     canvas.delete('all')  # delete all objects on canvas
     coords.clear()  # empty coords list
 
+#next button 
+
+def next_button(event):
+
+    if (current_sample_number) == sample_size - 1:
+        next_button["state"] = "disabled"
+        next_gesture_button["state"] = "normal"
+        current_sample_list.append(points)
+        add_samples("user", current_shape_number,current_sample_list)
+
+    current_sample_list.append(points)
+    current_sample_number += 1
+
+def next_gesture_button(event):
+    current_sample_number = 1
+    current_shape_number += 1
+    current_shape = get_current_shape(current_shape_number)
+
+    label = f'Please draw the following shape : {current_shape}'
+
+    return label
 
 ###################
 ## Program Start ##
@@ -85,10 +114,14 @@ label_recognised_candidate.place(y=65, x=0)
 win.title("$1 gesture recognition")
 
 #creating buttons
-next_button = tk.Button(win, text="Next" , fg="red")
+next_button = tk.Button(win, text="Next" , fg="red" , state="normal") #button to add next sample
 next_button.pack(side=tk.LEFT)
-reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas)
-reset_button.pack(side=tk.RIGHT)
+
+next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled")
+next_gesture_button.pack(side=tk.RIGHT)
+
+reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas) #button to reset the canvas
+reset_button.pack(side=tk.CENTER)
 
 
 # set keybinds
