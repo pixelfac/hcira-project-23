@@ -2,6 +2,7 @@ import tkinter as tk
 import numpy as np
 from preprocess_dollar_one import square_size, angle_range, angle_step, phi, recognize
 from next_button import add_samples, get_current_shape
+from output_util import save_to_xml
 
 """
 Project 1 for HCIRA, Spring '23
