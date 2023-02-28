@@ -62,10 +62,9 @@ def clear_canvas(event):
     canvas.delete('all')  # delete all objects on canvas
     coords.clear()  # empty coords list
 
+
 #next button 
-
 def next_button(event):
-
     if (current_sample_number) == sample_size - 1:
         next_button["state"] = "disabled"
         next_gesture_button["state"] = "normal"

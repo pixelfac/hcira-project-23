@@ -216,14 +216,17 @@ def recognize(points, n, templates=default_templates):
     points = scale_to_square(list(points), square_size=square_size)
     points = translate_to_origin(list(points))
     b = float('inf')
-    chosen_template = None
+    best_template = None
     for template in templates:
         distance = distance_at_best_angle(points, template.points, -angle_range, angle_range, angle_step, phi)
+        print(template.label)
+        print(len(template.points))
+        print(distance)
         if distance < b:
             b = distance
-            chosen_template = template
+            best_template = template
     score = 1 - b / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
-    return chosen_template, score
+    return best_template, score
 
 
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):
@@ -296,5 +299,5 @@ def path_distance(path1, path2):
 
 
 # preprocess templates
-# for template in default_templates:
-#     template.points = preprocess_points(template.points)
+for template in default_templates:
+    template.points = preprocess_points(template.points)
