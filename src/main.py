@@ -24,10 +24,8 @@ DATA_COLLECTION_USER = 'user01'
 
 current_shape_number = 1
 current_sample_number = 1
-current_sample_list = []
-number_of_gestures = 16
-sample_size = 10
-dataset = {"user" : {"gesture" : [[0.0, 0.0]]}} #structure
+total_gestures = 16
+total_sample_size = 10
 
 # Initialise coords list with first point
 def init_coords(event):
@@ -57,7 +55,7 @@ def process_line(event):
     if len(coords) < 2:
         return
     
-    # data collection
+    # if we're collecting data
     if DATA_COLLECTION_MODE:
         current_shape = get_current_shape(current_shape_number)
         save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
@@ -74,24 +72,22 @@ def clear_canvas(event):
     coords.clear()  # empty coords list
 
 
-#next button 
-def next_button(event):
-    if (current_sample_number) == sample_size - 1:
+#process to next sample
+def go_next_sample():
+    # if reached end of samples
+    if current_sample_number == total_sample_size - 1:
         next_button["state"] = "disabled"
         next_gesture_button["state"] = "normal"
-        current_sample_list.append(points)
-        add_samples("user", current_shape_number,current_sample_list)
 
-    current_sample_list.append(points)
+    print(current_sample_number)
     current_sample_number += 1
 
-def next_gesture_button(event):
+def next_gesture_button():
     current_shape_number += 1
     current_shape = get_current_shape(current_shape_number)
+    current_sample_number = 1
 
     label = f'Please draw the following shape : {current_shape}'
-
-    return label
 
 ###################
 ## Program Start ##
@@ -124,10 +120,10 @@ label_recognised_candidate.place(y=65, x=0)
 win.title("$1 gesture recognition")
 
 #creating buttons
-next_button = tk.Button(win, text="Next" , fg="red" , state="normal") #button to add next sample
+next_button = tk.Button(win, text="Next" , fg="red" , state="normal", command=go_next_sample) #button to add next sample
 next_button.place(y=100, x=0)
 
-next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled")
+next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled", command=next_gesture_button)
 next_gesture_button.place(y=125, x=0)
 
 reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas) #button to reset the canvas
