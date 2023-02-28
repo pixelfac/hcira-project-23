@@ -20,6 +20,7 @@ of the implemented gesture recognition algorithms
 
 #global variables
 DATA_COLLECTION_MODE = True
+DATA_COLLECTION_USER = 'user01'
 
 current_shape_number = 1
 current_sample_number = 1
@@ -58,7 +59,8 @@ def process_line(event):
     
     # data collection
     if DATA_COLLECTION_MODE:
-        save_to_xml(coords)
+        current_shape = get_current_shape(current_shape_number)
+        save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
         return
 
     # $1 algorithm
@@ -84,7 +86,6 @@ def next_button(event):
     current_sample_number += 1
 
 def next_gesture_button(event):
-    current_sample_number = 1
     current_shape_number += 1
     current_shape = get_current_shape(current_shape_number)
 
