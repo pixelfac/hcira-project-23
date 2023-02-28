@@ -115,13 +115,13 @@ win.title("$1 gesture recognition")
 
 #creating buttons
 next_button = tk.Button(win, text="Next" , fg="red" , state="normal") #button to add next sample
-next_button.pack(side=tk.LEFT)
+next_button.place(y=100, x=0)
 
 next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled")
-next_gesture_button.pack(side=tk.RIGHT)
+next_gesture_button.place(y=125, x=0)
 
 reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas) #button to reset the canvas
-reset_button.pack(side=tk.CENTER)
+reset_button.place(y=150, x=0)
 
 
 # set keybinds
