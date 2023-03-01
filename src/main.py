@@ -20,12 +20,12 @@ of the implemented gesture recognition algorithms
 
 #global variables
 DATA_COLLECTION_MODE = True
-DATA_COLLECTION_USER = 'user05'
+DATA_COLLECTION_USER = 'user01'
 
 current_shape_number = 1
 current_sample_number = 1
 total_gestures = 16
-total_sample_size = 3
+total_sample_size = 10
 
 # Initialise coords list with first point
 def init_coords(event):
