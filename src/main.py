@@ -20,7 +20,7 @@ of the implemented gesture recognition algorithms
 
 #global variables
 DATA_COLLECTION_MODE = True
-DATA_COLLECTION_USER = 'user01'
+DATA_COLLECTION_USER = 'user02'
 
 current_shape_number = 1
 current_sample_number = 1
@@ -146,14 +146,14 @@ else:
 win.title("$1 gesture recognition")
 
 #creating buttons
-next_button = tk.Button(win, text="Next" , fg="red" , state="normal", command=go_next_sample) #button to add next sample
+next_button = tk.Button(win, text="Next" , fg="red" , state="normal", command=go_next_sample, height=2, width=12) #button to add next sample
 next_button.place(y=100, x=0)
 
 next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled", command=next_gesture_button)
-next_gesture_button.place(y=125, x=0)
+next_gesture_button.place(y=140, x=0)
 
 reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas) #button to reset the canvas
-reset_button.place(y=150, x=0)
+reset_button.place(y=165, x=0)
 
 
 # set keybinds
