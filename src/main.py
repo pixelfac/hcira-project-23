@@ -25,7 +25,7 @@ DATA_COLLECTION_USER = 'user01'
 current_shape_number = 1
 current_sample_number = 1
 total_gestures = 16
-total_sample_size = 2
+total_sample_size = 10
 
 # Initialise coords list with first point
 def init_coords(event):
