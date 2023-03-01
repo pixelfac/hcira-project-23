@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="circle8" Subject="user01" Number="8" NumPts="7"/>
-<Point X="20" Y="4" />
-<Point X="20" Y="5" />
-<Point X="19" Y="6" />
-<Point X="18" Y="7" />
-<Point X="18" Y="8" />
-<Point X="19" Y="8" />
-<Point X="20" Y="9" />

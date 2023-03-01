@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="v5" Subject="user01" Number="5" NumPts="6"/>
-<Point X="17" Y="4" />
-<Point X="17" Y="5" />
-<Point X="16" Y="5" />
-<Point X="15" Y="5" />
-<Point X="16" Y="5" />
-<Point X="17" Y="5" />

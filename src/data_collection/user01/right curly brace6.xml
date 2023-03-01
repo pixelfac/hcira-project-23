@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="right curly brace6" Subject="user01" Number="6" NumPts="7"/>
-<Point X="32" Y="10" />
-<Point X="32" Y="9" />
-<Point X="31" Y="9" />
-<Point X="30" Y="9" />
-<Point X="31" Y="9" />
-<Point X="32" Y="10" />
-<Point X="33" Y="10" />

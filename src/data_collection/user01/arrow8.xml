@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="arrow8" Subject="user01" Number="8" NumPts="5"/>
-<Point X="15" Y="7" />
-<Point X="15" Y="6" />
-<Point X="16" Y="6" />
-<Point X="16" Y="5" />
-<Point X="17" Y="4" />
