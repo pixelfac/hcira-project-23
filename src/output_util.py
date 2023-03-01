@@ -114,10 +114,9 @@ def save_to_xml(points, label, user, count):
 
     with open(directory+file_name, 'x') as f:
         f.write('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n')
-        f.write('<Gesture Name="{}{}" Subject="{}" Number="{}" NumPts="{}"/>\n'.format(label, count, user, count, num_pts))
+        f.write('<Gesture Name="{}{}" Subject="{}" Number="{}" NumPts="{}">\n'.format(label, count, user, count, num_pts))
 
         for pt in points:
-            f.write('<Point X="{}" Y="{}" />\n'.format(pt[0], pt[1]))
+            f.write('   <Point X="{}" Y="{}" T="{}" />\n'.format(pt[0], pt[1], pt[2]))
 
         f.write('</Gesture>')
-

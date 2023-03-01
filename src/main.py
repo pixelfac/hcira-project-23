@@ -3,6 +3,7 @@ import numpy as np
 from preprocess_dollar_one import square_size, angle_range, angle_step, phi, recognize
 from next_button import add_samples, get_current_shape
 from output_util import save_to_xml
+import time
 
 """
 Project 1 for HCIRA, Spring '23
@@ -18,7 +19,7 @@ the user interacts with, recording gestures and outputting the results
 of the implemented gesture recognition algorithms
 """
 
-#global variables
+# global variables
 DATA_COLLECTION_MODE = True
 DATA_COLLECTION_USER = 'user03'
 
@@ -27,10 +28,13 @@ current_sample_number = 1
 total_gestures = 16
 total_sample_size = 10
 
+
 # Initialise coords list with first point
 def init_coords(event):
-    clear_canvas(event)
-    coords.append([event.x, event.y])
+    # clear_canvas(event)
+    clear_canvas()
+    current_time = int(round(time.time() * 1000))
+    coords.append([event.x, event.y, current_time])
 
 
 # Draws on canvas
@@ -40,7 +44,8 @@ def draw_line(event):
         canvas.create_line(event.x, event.y, x1, y1)
         # canvas.itemconfig(label_current_coord, text="Current coordinate: x=" + str(event.x) + ", y=" + str(event.y))
         label_current_coord["text"] = "Current coordinate: x=" + str(event.x) + ", y=" + str(event.y)
-    coords.append([event.x, event.y])
+    current_time = int(round(time.time() * 1000))
+    coords.append([event.x, event.y, current_time])
     canvas.old_coords = event.x, event.y
 
 
@@ -65,26 +70,29 @@ def process_line(event):
 
 
 # Clear the canvas
-def clear_canvas(event):
+def clear_canvas():
+    print("CLEARING")
     canvas.delete('all')  # delete all objects on canvas
     coords.clear()  # empty coords list
 
 
-#process to next sample
-def go_next_sample(event):
+# process to next sample
+def go_next_sample():
     global current_sample_number
     global current_shape_number
     global label_gesture_prompt
 
     # if reached end of samples
     if current_sample_number == total_sample_size+1:
+        next_button["state"] = "disabled"
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
         return
-    
 
     # save current drawing
     current_shape = get_current_shape(current_shape_number)
+    label = f'Please draw the following shape : {current_shape}. Sample number: {current_sample_number + 1}'
+    label_gesture_prompt.config(text=label)
     save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
 
     # if reached end of samples
@@ -92,14 +100,12 @@ def go_next_sample(event):
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
         return
-    
-    clear_canvas(event)
 
-
-
+    clear_canvas()
 
     print(current_sample_number)
-    current_sample_number += 1
+    current_sample_number = current_sample_number + 1
+
 
 def next_gesture_button():
     global current_sample_number
@@ -107,19 +113,21 @@ def next_gesture_button():
     global label_gesture_prompt
 
     # iterate data tracking variables
-    current_shape_number += 1
+    current_shape_number = current_shape_number + 1
     current_shape = get_current_shape(current_shape_number)
     current_sample_number = 1
 
     # reset buttons
+    next_button["state"] = "normal"
     next_gesture_button["state"] = "disabled"
 
-    label = f'Please draw the following shape : {current_shape}. Press <Enter> to submit'
+    label = f'Please draw the following shape : {current_shape}. Sample number: {current_sample_number}'
     label_gesture_prompt.config(text=label)
 
 ###################
-## Program Start ##
+# Program Start ##
 ###################
+
 
 win = tk.Tk()  # init window
 win.geometry("600x600")  # set window dimensions
@@ -144,7 +152,7 @@ label_current_coord.place(y=45, x=0)
 
 if DATA_COLLECTION_MODE:
     # for data collection
-    label_gesture_prompt = tk.Label(text='Please draw the following shape : {}. Press <Enter> to submit'.format(get_current_shape(1)))
+    label_gesture_prompt = tk.Label(text='Please draw the following shape : {}'.format(get_current_shape(1)))
     label_gesture_prompt.place(y=65, x=0)
 else:
     # for live recognition
@@ -153,21 +161,29 @@ else:
 
 win.title("$1 gesture recognition")
 
-#creating buttons
-next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled", command=next_gesture_button)
-next_gesture_button.place(y=140, x=0)
+######################
+# creating buttons
+######################
 
-reset_button = tk.Button(win, text ="Reset Canvas", fg = "red", command=clear_canvas) #button to reset the canvas
-reset_button.place(y=165, x=0)
+# button to add next sample
+next_button = tk.Button(win, text="Next", fg="red", state="normal", command=go_next_sample, height=1, width=10)
+next_button.place(y=520, x=210)
+
+# button to prompt next gesture
+next_gesture_button = tk.Button(win, text="Next Gesture", fg="red", state="disabled", command=next_gesture_button)
+next_gesture_button.place(y=560, x=260)
+
+# button to reset the canvas
+reset_button = tk.Button(win, text="Reset Canvas", fg="red", command=clear_canvas)
+reset_button.place(y=520, x=310)
 
 
 # set keybinds
-win.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
-win.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
-win.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
-win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coords list
-win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
-win.bind('<Return>', go_next_sample)  # On pressing space bar, recognise the gesture
+canvas.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
+canvas.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
+canvas.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
+# win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coords list
+# win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
 
 win.mainloop()  # start main event loop
 
