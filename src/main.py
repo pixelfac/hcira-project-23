@@ -84,12 +84,15 @@ def go_next_sample():
 
     # if reached end of samples
     if current_sample_number == total_sample_size+1:
+        next_button["state"] = "disabled"
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
         return
 
     # save current drawing
     current_shape = get_current_shape(current_shape_number)
+    label = f'Please draw the following shape : {current_shape}. Sample number: {current_sample_number + 1}'
+    label_gesture_prompt.config(text=label)
     save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
 
     # if reached end of samples
