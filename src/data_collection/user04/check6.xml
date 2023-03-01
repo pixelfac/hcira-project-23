@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="check6" Subject="user04" Number="6" NumPts="7"/>
-<Point X="63" Y="20" />
-<Point X="63" Y="21" />
-<Point X="62" Y="21" />
-<Point X="61" Y="21" />
-<Point X="61" Y="22" />
-<Point X="61" Y="23" />
-<Point X="62" Y="24" />

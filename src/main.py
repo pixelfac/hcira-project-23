@@ -21,7 +21,7 @@ of the implemented gesture recognition algorithms
 
 # global variables
 DATA_COLLECTION_MODE = True
-DATA_COLLECTION_USER = 'user05'
+DATA_COLLECTION_USER = 'user06'
 
 current_shape_number = 1
 current_sample_number = 1
@@ -82,16 +82,23 @@ def go_next_sample():
     global current_shape_number
     global label_gesture_prompt
 
+    # if reached end of samples
+    if current_sample_number == total_sample_size+1:
+        next_gesture_button["state"] = "normal"
+        label_gesture_prompt.config(text="Click 'Next Gesture'")
+        return
+
     # save current drawing
     current_shape = get_current_shape(current_shape_number)
-    print("Length: " + str(len(coords)))
     save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
 
     # if reached end of samples
-    if current_sample_number == total_sample_size:
-        next_button["state"] = "disabled"
+    if current_sample_number == total_sample_size+1:
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
+        return
+
+    clear_canvas()
 
     print(current_sample_number)
     current_sample_number = current_sample_number + 1
