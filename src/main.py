@@ -25,7 +25,7 @@ DATA_COLLECTION_USER = 'user05'
 current_shape_number = 1
 current_sample_number = 1
 total_gestures = 16
-total_sample_size = 10
+total_sample_size = 3
 
 # Initialise coords list with first point
 def init_coords(event):
@@ -71,21 +71,28 @@ def clear_canvas(event):
 
 
 #process to next sample
-def go_next_sample():
+def go_next_sample(event):
     global current_sample_number
     global current_shape_number
     global label_gesture_prompt
+
+    # if reached end of samples
+    if current_sample_number == total_sample_size+1:
+        next_gesture_button["state"] = "normal"
+        label_gesture_prompt.config(text="Click 'Next Gesture'")
+        return
+    
 
     # save current drawing
     current_shape = get_current_shape(current_shape_number)
     save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
 
-
     # if reached end of samples
-    if current_sample_number == total_sample_size:
-        next_button["state"] = "disabled"
+    if current_sample_number == total_sample_size+1:
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
+        return
+
 
 
 
@@ -103,7 +110,6 @@ def next_gesture_button():
     current_sample_number = 1
 
     # reset buttons
-    next_button["state"] = "normal"
     next_gesture_button["state"] = "disabled"
 
     label = f'Please draw the following shape : {current_shape}'
@@ -146,9 +152,6 @@ else:
 win.title("$1 gesture recognition")
 
 #creating buttons
-next_button = tk.Button(win, text="Next" , fg="red" , state="normal", command=go_next_sample, height=2, width=12) #button to add next sample
-next_button.place(y=100, x=0)
-
 next_gesture_button = tk.Button(win, text="Next Gesture" , fg="red" , state="disabled", command=next_gesture_button)
 next_gesture_button.place(y=140, x=0)
 
@@ -162,6 +165,7 @@ win.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving
 win.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
 win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coords list
 win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
+win.bind('<Return>', go_next_sample)  # On pressing space bar, recognise the gesture
 
 win.mainloop()  # start main event loop
 
