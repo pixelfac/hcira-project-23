@@ -11,7 +11,7 @@ template_dataframe =  pd.DataFrame (
     "Training Set Contents" : pd.Series(dtype= 'object'),
     "Candidate" : pd.Series(dtype = 'str'),
     "Recognizer Result Gesture Type" : pd.Series(dtype = 'str'),
-    "Result" : pd.Series(dtype = 'str'),
+    "Result" : pd.Series(dtype = 'int'),
     "Recognizer Result Score" : pd.Series(dtype = 'float'),
     "Recognizer Result Best Match" : pd.Series(dtype = 'str'),
     "Recognizer Resilr N Best Sorted" : pd.Series(dtype= 'object')
@@ -73,7 +73,7 @@ def add_data_to_dataframe(dataframe , user, gesture_type, iteration_number, numb
         return "Error"  #can use raise exception for this, based on main function loop.
 
 
-def convert_dataframe_to_csv (dataframe, filepath):
+def convert_dataframe_to_csv (dataframe):
     """
     Utility Method to convert dataframe to csv
     :param dataframe: Final dataframe as pandas dataframe
@@ -81,8 +81,9 @@ def convert_dataframe_to_csv (dataframe, filepath):
     :return :
     """
     # output_file_path = filepath + "\export_dataframe.csv"
-    output_file_path = os.getcwd() + "\\output.csv"
+    output_file_path = os.getcwd() + "\\output_large.csv"
     dataframe.to_csv(output_file_path, index=False, header=True)
+    # dataframe.to_csv()
 
     #path os library  can be used for getthing the
 
@@ -96,6 +97,5 @@ def add_list_to_dataframe(dataframe, row):
     temp_dataframe = dataframe.copy()
 
     temp_dataframe.loc[len(temp_dataframe)] = row
-    temp_dataframe.concat
 
     return temp_dataframe
