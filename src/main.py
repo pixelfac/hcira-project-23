@@ -20,7 +20,7 @@ of the implemented gesture recognition algorithms
 
 #global variables
 DATA_COLLECTION_MODE = True
-DATA_COLLECTION_USER = 'user04'
+DATA_COLLECTION_USER = 'user05'
 
 current_shape_number = 1
 current_sample_number = 1
