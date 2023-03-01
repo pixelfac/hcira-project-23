@@ -104,9 +104,15 @@ def add_list_to_dataframe(dataframe, row):
 # writing to xml file
 def save_to_xml(points, label, user, count):
     num_pts = len(points)
-    directory = './data_collection/{}/{}{}.xml'.format(user, label, count)
+    directory = './data_collection/{}/'.format(user)
+    file_name = '{}{}.xml'.format(label, count)
 
-    with open(directory, 'x') as f:
+    try:
+        os.mkdir(directory)
+    except:
+        pass
+
+    with open(directory+file_name, 'x') as f:
         f.write('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n')
         f.write('<Gesture Name="{}{}" Subject="{}" Number="{}" NumPts="{}"/>\n'.format(label, count, user, count, num_pts))
 
