@@ -25,7 +25,7 @@ DATA_COLLECTION_USER = 'user01'
 current_shape_number = 1
 current_sample_number = 1
 total_gestures = 16
-total_sample_size = 10
+total_sample_size = 2
 
 # Initialise coords list with first point
 def init_coords(event):
@@ -57,8 +57,6 @@ def process_line(event):
     
     # if we're collecting data
     if DATA_COLLECTION_MODE:
-        current_shape = get_current_shape(current_shape_number)
-        save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
         return
 
     # $1 algorithm
@@ -74,6 +72,13 @@ def clear_canvas(event):
 
 #process to next sample
 def go_next_sample():
+    global current_sample_number
+    global current_shape_number
+    # save current drawing
+    current_shape = get_current_shape(current_shape_number)
+    save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
+
+
     # if reached end of samples
     if current_sample_number == total_sample_size - 1:
         next_button["state"] = "disabled"
@@ -83,11 +88,16 @@ def go_next_sample():
     current_sample_number += 1
 
 def next_gesture_button():
+    global current_sample_number
+    global current_shape_number
+
     current_shape_number += 1
     current_shape = get_current_shape(current_shape_number)
     current_sample_number = 1
 
     label = f'Please draw the following shape : {current_shape}'
+    global label_gesture_prompt
+    label_gesture_prompt.config(text=label)
 
 ###################
 ## Program Start ##
@@ -114,8 +124,12 @@ label_right_click.place(y=25, x=0)
 label_current_coord = tk.Label(text="")
 label_current_coord.place(y=45, x=0)
 
-label_recognised_candidate = tk.Label(text="")
-label_recognised_candidate.place(y=65, x=0)
+# for live recognition
+# label_recognised_candidate = tk.Label(text="")
+# label_recognised_candidate.place(y=65, x=0)
+
+label_gesture_prompt = tk.Label(text='Please draw the following shape : {}'.format(get_current_shape(1)))
+label_gesture_prompt.place(y=65, x=0)
 
 win.title("$1 gesture recognition")
 
