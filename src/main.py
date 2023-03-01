@@ -112,7 +112,7 @@ def next_gesture_button():
     # reset buttons
     next_gesture_button["state"] = "disabled"
 
-    label = f'Please draw the following shape : {current_shape}'
+    label = f'Please draw the following shape : {current_shape}. Press <Enter> to submit'
     label_gesture_prompt.config(text=label)
 
 ###################
@@ -142,7 +142,7 @@ label_current_coord.place(y=45, x=0)
 
 if DATA_COLLECTION_MODE:
     # for data collection
-    label_gesture_prompt = tk.Label(text='Please draw the following shape : {}'.format(get_current_shape(1)))
+    label_gesture_prompt = tk.Label(text='Please draw the following shape : {}. Press <Enter> to submit'.format(get_current_shape(1)))
     label_gesture_prompt.place(y=65, x=0)
 else:
     # for live recognition
