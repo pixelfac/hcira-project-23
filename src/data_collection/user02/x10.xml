@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="x10" Subject="user02" Number="10" NumPts="10"/>
+<Point X="75" Y="17" />
+<Point X="75" Y="18" />
+<Point X="74" Y="18" />
+<Point X="73" Y="19" />
+<Point X="72" Y="19" />
+<Point X="71" Y="19" />
+<Point X="71" Y="18" />
+<Point X="72" Y="18" />
+<Point X="72" Y="17" />
+<Point X="73" Y="17" />
