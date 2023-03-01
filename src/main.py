@@ -124,12 +124,14 @@ label_right_click.place(y=25, x=0)
 label_current_coord = tk.Label(text="")
 label_current_coord.place(y=45, x=0)
 
-# for live recognition
-# label_recognised_candidate = tk.Label(text="")
-# label_recognised_candidate.place(y=65, x=0)
-
-label_gesture_prompt = tk.Label(text='Please draw the following shape : {}'.format(get_current_shape(1)))
-label_gesture_prompt.place(y=65, x=0)
+if DATA_COLLECTION_MODE:
+    # for data collection
+    label_gesture_prompt = tk.Label(text='Please draw the following shape : {}'.format(get_current_shape(1)))
+    label_gesture_prompt.place(y=65, x=0)
+else:
+    # for live recognition
+    label_recognised_candidate = tk.Label(text="")
+    label_recognised_candidate.place(y=65, x=0)
 
 win.title("$1 gesture recognition")
 
