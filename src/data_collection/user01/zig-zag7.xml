@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="zig-zag7" Subject="user01" Number="7" NumPts="4"/>
+<Point X="25" Y="7" />
+<Point X="26" Y="7" />
+<Point X="26" Y="6" />
+<Point X="26" Y="5" />

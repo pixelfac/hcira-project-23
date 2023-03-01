@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="circle9" Subject="user01" Number="9" NumPts="4"/>
+<Point X="30" Y="5" />
+<Point X="30" Y="4" />
+<Point X="29" Y="4" />
+<Point X="29" Y="3" />

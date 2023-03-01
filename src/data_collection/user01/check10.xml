@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="check10" Subject="user01" Number="10" NumPts="2"/>
+<Point X="29" Y="6" />
+<Point X="29" Y="5" />
