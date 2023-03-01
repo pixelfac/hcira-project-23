@@ -14,7 +14,7 @@ shapes = {
     13: "left curly brace",
     14: "right curly brace",
     15: "star",
-    16: "pig tail"
+    16: "pigtail"
 }
 
 
