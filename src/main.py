@@ -74,15 +74,20 @@ def clear_canvas(event):
 def go_next_sample():
     global current_sample_number
     global current_shape_number
+    global label_gesture_prompt
+
     # save current drawing
     current_shape = get_current_shape(current_shape_number)
     save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
 
 
     # if reached end of samples
-    if current_sample_number == total_sample_size - 1:
+    if current_sample_number == total_sample_size:
         next_button["state"] = "disabled"
         next_gesture_button["state"] = "normal"
+        label_gesture_prompt.config(text="Click 'Next Gesture'")
+
+
 
     print(current_sample_number)
     current_sample_number += 1
@@ -90,13 +95,18 @@ def go_next_sample():
 def next_gesture_button():
     global current_sample_number
     global current_shape_number
+    global label_gesture_prompt
 
+    # iterate data tracking variables
     current_shape_number += 1
     current_shape = get_current_shape(current_shape_number)
     current_sample_number = 1
 
+    # reset buttons
+    next_button["state"] = "normal"
+    next_gesture_button["state"] = "disabled"
+
     label = f'Please draw the following shape : {current_shape}'
-    global label_gesture_prompt
     label_gesture_prompt.config(text=label)
 
 ###################
