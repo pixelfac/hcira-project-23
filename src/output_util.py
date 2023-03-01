@@ -119,3 +119,5 @@ def save_to_xml(points, label, user, count):
         for pt in points:
             f.write('<Point X="{}" Y="{}" />\n'.format(pt[0], pt[1]))
 
+        f.write('</Gesture>')
+
