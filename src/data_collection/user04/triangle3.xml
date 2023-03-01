@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="triangle3" Subject="user04" Number="3" NumPts="4"/>
+<Point X="90" Y="26" />
+<Point X="89" Y="26" />
+<Point X="88" Y="26" />
+<Point X="87" Y="26" />

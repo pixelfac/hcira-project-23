@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="delete1" Subject="user04" Number="1" NumPts="15"/>
+<Point X="70" Y="20" />
+<Point X="69" Y="20" />
+<Point X="68" Y="21" />
+<Point X="67" Y="21" />
+<Point X="66" Y="21" />
+<Point X="65" Y="21" />
+<Point X="65" Y="20" />
+<Point X="64" Y="20" />
+<Point X="63" Y="20" />
+<Point X="63" Y="19" />
+<Point X="65" Y="19" />
+<Point X="65" Y="20" />
+<Point X="66" Y="20" />
+<Point X="66" Y="22" />
+<Point X="67" Y="22" />

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="arrow5" Subject="user04" Number="5" NumPts="7"/>
+<Point X="68" Y="27" />
+<Point X="69" Y="27" />
+<Point X="70" Y="26" />
+<Point X="70" Y="25" />
+<Point X="70" Y="24" />
+<Point X="68" Y="24" />
+<Point X="68" Y="23" />

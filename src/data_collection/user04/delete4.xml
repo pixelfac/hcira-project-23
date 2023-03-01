@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name="delete4" Subject="user04" Number="4" NumPts="7"/>
+<Point X="59" Y="10" />
+<Point X="59" Y="11" />
+<Point X="59" Y="12" />
+<Point X="58" Y="12" />
+<Point X="58" Y="13" />
+<Point X="57" Y="13" />
+<Point X="57" Y="14" />
