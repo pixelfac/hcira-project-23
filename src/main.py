@@ -92,6 +92,8 @@ def go_next_sample(event):
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
         return
+    
+    clear_canvas(event)
 
 
 
