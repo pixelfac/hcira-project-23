@@ -5,10 +5,10 @@ Aravind S
 Nathan Harris
 Shashanka Bhat
 
-a) write gesture logs to xml outputs
+a) after a user submits a gesture to be recorded, via the 'go_next_sample()' function on line 100 of main.py, the 'save_to_xml()' function is called, which is imported from line 105 on output_util.py. This function takes the current data and metadata about the gesture, like the userID, label, points, and which sample of which gesture it is, and writes that data to an xml file using python's default file writing library. Each userID gets their own folder to store recorded gestures inside the data_collection folder
 
 b) prompting for specific examples
 
 c) I recruited willing participants from friends I encountered at the library
 
-d) we wrote the user data to labeled folders
+d) We grouped data collected into folders by user and labeled all of the 
