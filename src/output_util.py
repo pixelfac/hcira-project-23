@@ -104,7 +104,7 @@ def add_list_to_dataframe(dataframe, row):
 # writing to xml file
 def save_to_xml(points, label, user, count):
     num_pts = len(points)
-    directory = './data_collection/{}/'.format(user)
+    directory = './dataset/{}/'.format(user)
     file_name = '{}{}.xml'.format(label, count)
 
     try:
