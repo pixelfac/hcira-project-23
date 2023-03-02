@@ -7,7 +7,9 @@ Shashanka Bhat
 
 a) write gesture logs to xml outputs
 
-b) prompting for specific examples
+b) prompting for specific examples:
+We have two canvas present in the window for this part. The left canvas presents the user with example of the gesture that needs to be drawn. The example gesture is taken from the template points from $1 recognition website used in the 2nd part of this project. The right canvas is for the user to draw their sample.
+We have 3 buttons present in the window. First one is 'Next' button, which on clicking saves the user drawn gesture into an xml file and proceeds to clear the canvas for the user to draw the next sample of the gesture or the 1st sample of the next gesture. It is disabled once all samples of the current gesture type are drawn, so that user doesnt draw any more samples. Second, is the 'Reset Canvas' button which clears the canvas, if the user feels they want to draw the gesture again. The last button is the 'Next Gesture' button. It is initially disabled, but once all samples of a particular gesture is drawn, it is enabled to prompt the user to draw samples of the next gesture. If all samples of all gestures have been drawn then both 'Next' and 'Next Gesture' buttons are disabled.
 
 c) I recruited willing participants from friends I encountered at the library
 
