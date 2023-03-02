@@ -1,0 +1,14 @@
+Project1 Part4 Submission for HCIRA, Spring '23
+
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
+
+a) write gesture logs to xml outputs
+
+b) prompting for specific examples
+
+c) I recruited willing participants from friends I encountered at the library
+
+d) we wrote the user data to labeled folders
