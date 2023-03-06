@@ -34,7 +34,7 @@ from unistroke import Unistroke, Point
 
 data = {}
 
-cwd = os.getcwd() + '/xml/xml_logs/'
+cwd = os.getcwd() + '/dataset/'
 # dirs = [x[0] for x in next(os.walk('.'))]
 directory_contents = os.listdir(cwd)
 # print(directory_contents)
@@ -52,7 +52,7 @@ for x in directory_contents:
 gestures = []
 for user in users:
     # print("user: " + user)
-    path = os.getcwd() + "\\xml\\xml_logs\\" + user + "\\medium\\"
+    path = cwd + user + "/"
     # print(path)
     # print(os.listdir(path))
     temp = []
