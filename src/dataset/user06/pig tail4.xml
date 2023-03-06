@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="pig tail4" Subject="user06" Number="4" NumPts="71">
+<Gesture Name="pig tail4" Subject="user06" Number="4" NumPts="71>
    <Point X="297" Y="304" T="1677704082812" />
    <Point X="297" Y="305" T="1677704082818" />
    <Point X="297" Y="306" T="1677704082830" />

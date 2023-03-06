@@ -83,7 +83,7 @@ for user_index in range(0, len(users)):
     data[user] = {}
     # print("gesture: " + str(len(gestures[user_index])))
     for gesture_index in range(0, len(gestures[user_index])):
-        # print(gestures[user_index][gesture_index])
+        print(gestures[user_index][gesture_index])
         document = ET.parse(gestures[user_index][gesture_index])
         gesture_name = document.getroot().attrib['Name']
         digit_index = re.search(r"\d", gesture_name)
