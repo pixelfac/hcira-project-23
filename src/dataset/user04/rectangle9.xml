@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="rectangle9" Subject="user04" Number="9" NumPts="175>
+<Gesture Name="rectangle9" Subject="user04" Number="9" NumPts="175">
    <Point X="336" Y="147" T="1677701584695" />
    <Point X="336" Y="159" T="1677701584696" />
    <Point X="336" Y="163" T="1677701584700" />

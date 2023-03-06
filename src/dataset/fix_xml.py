@@ -2,7 +2,7 @@ import os
 
 users = os.listdir('./')
 # remove this file from list
-users = users[1:]
+users = users[4:]
 print(users)
 
 
@@ -13,7 +13,7 @@ for user in users:
         with open('./' + user + '/' + sample, 'r') as f:
             text = f.readlines()
 
-        text[1] = text[1][:-3] + '>\n'
+        text[1] = text[1][:-2] + '">\n'
 
         # clear and rewrite
         with open('./' + user + '/' + sample, 'w') as f:
