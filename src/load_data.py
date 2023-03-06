@@ -34,7 +34,7 @@ from unistroke import Unistroke, Point
 
 data = {}
 
-cwd = os.getcwd() + '/dataset/'
+cwd = os.getcwd() + '\\dataset\\'
 # dirs = [x[0] for x in next(os.walk('.'))]
 directory_contents = os.listdir(cwd)
 # print(directory_contents)
@@ -44,6 +44,7 @@ for x in directory_contents:
     # print(x)
     # if os.path.isdir(x):
     index = x.find('pilot')
+    index = x.find('fix_xml')
     if index < 0:
         users.append(x)
 
@@ -52,7 +53,7 @@ for x in directory_contents:
 gestures = []
 for user in users:
     # print("user: " + user)
-    path = cwd + user + "/"
+    path = cwd + user + "\\"
     # print(path)
     # print(os.listdir(path))
     temp = []
@@ -83,7 +84,7 @@ for user_index in range(0, len(users)):
     data[user] = {}
     # print("gesture: " + str(len(gestures[user_index])))
     for gesture_index in range(0, len(gestures[user_index])):
-        print(gestures[user_index][gesture_index])
+        # print(gestures[user_index][gesture_index])
         document = ET.parse(gestures[user_index][gesture_index])
         gesture_name = document.getroot().attrib['Name']
         digit_index = re.search(r"\d", gesture_name)
