@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<Gesture Name="triangle8" Subject="user06" Number="8" NumPts="330">
+<Gesture Name="triangle08" Subject="user06" Number="8" NumPts="330">
    <Point X="293" Y="159" T="1677703540313" />
    <Point X="293" Y="160" T="1677703540330" />
    <Point X="292" Y="160" T="1677703540340" />
