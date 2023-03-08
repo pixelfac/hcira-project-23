@@ -15,7 +15,8 @@ This file contains the functionality for the $1 gesture recognition algorithm
 """
 
 # global variables and constants
-square_size = 300
+# square_size = 300
+square_size = 200
 angle_range = 45
 angle_step = 2
 phi = 0.5 * (-1 + np.sqrt(5))
@@ -31,7 +32,19 @@ def preprocess_points(points):
     points = rotate_to_zero(points)
     points = scale_to_square(points, square_size=square_size)
     points = translate_to_origin(points)
+    return points
 
+
+def preprocess_points_example(points):
+    """
+    takes in a list of Points and returns that list after
+    all preprocessing steps: resample, rotate, scale, and translate
+    :param points: All points itendified from user's gesture
+    """
+    points = resample_points(points, 64)
+    # points = rotate_to_zero(points)
+    points = scale_to_square(points, square_size=square_size)
+    points = translate_to_center_new_canvas(points)
     return points
 
 
@@ -216,14 +229,17 @@ def recognize(points, n, templates=default_templates):
     points = scale_to_square(list(points), square_size=square_size)
     points = translate_to_origin(list(points))
     b = float('inf')
-    chosen_template = None
+    best_template = None
     for template in templates:
         distance = distance_at_best_angle(points, template.points, -angle_range, angle_range, angle_step, phi)
+        print(template.label)
+        print(len(template.points))
+        print(distance)
         if distance < b:
             b = distance
-            chosen_template = template
+            best_template = template
     score = 1 - b / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
-    return chosen_template, score
+    return best_template, score
 
 
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):
@@ -295,6 +311,28 @@ def path_distance(path1, path2):
     return d / len(path1)
 
 
+def translate_to_center_new_canvas(points):
+    """
+    Method to translate the points to origin
+    :param points: array of coordinates
+    :return: new points as an array after translating to origin
+    """
+
+    centroid_x, centroid_y = get_centroid(np.array(points))
+    new_points = np.zeros((1, 2))
+
+    for point in points:
+        q = np.array([0., 0.])
+        q[0] = point[0] - centroid_x + 200
+        q[1] = point[1] - centroid_y + 200
+        new_points = np.append(new_points, [q], 0)
+
+    return new_points[1:]
+
+
 # preprocess templates
 # for template in default_templates:
 #     template.points = preprocess_points(template.points)
+
+for template in default_templates:
+    template.points = preprocess_points_example(template.points)

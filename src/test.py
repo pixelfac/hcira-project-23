@@ -123,4 +123,19 @@ df = create_empty_dataframe()
 for row in rows:
     df = add_list_to_dataframe(df, row)
 
+df = add_list_to_dataframe(df, ["", "", "", "", "", "", "", "", "", "", "", ""])
+
+user_accuracy_score_array = []
+for user_index in range(0, len(users)):
+    df = add_list_to_dataframe(df, ["Total Accuracy for " + users[user_index] + ": ", accuracy[users[user_index]][0] / accuracy[users[user_index]][1], "", "", "", "", "", "", "", "", "", ""])
+    user_accuracy_score_array.append(accuracy[users[user_index]][0] / accuracy[users[user_index]][1])
+
+print(user_accuracy_score_array)
+
+average = sum(user_accuracy_score_array) / len(user_accuracy_score_array) + 1
+
+df = add_list_to_dataframe(df, ["", "", "", "", "", "", "", "", "", "", "", ""])
+
+df = add_list_to_dataframe(df, ["Average Accuracy for all users : ", str(average) , "", "", "", "", "", "", "", "", "", ""]) 
+
 convert_dataframe_to_csv(df)

@@ -99,3 +99,24 @@ def add_list_to_dataframe(dataframe, row):
     temp_dataframe.concat
 
     return temp_dataframe
+
+
+# writing to xml file
+def save_to_xml(points, label, user, count):
+    num_pts = len(points)
+    directory = './dataset/{}/'.format(user)
+    file_name = '{}{}.xml'.format(label, count)
+
+    try:
+        os.mkdir(directory)
+    except:
+        pass
+
+    with open(directory+file_name, 'x') as f:
+        f.write('<?xml version="1.0" encoding="utf-8" standalone="yes"?>\n')
+        f.write('<Gesture Name="{}{}" Subject="{}" Number="{}" NumPts="{}">\n'.format(label, count, user, count, num_pts))
+
+        for pt in points:
+            f.write('   <Point X="{}" Y="{}" T="{}" />\n'.format(pt[0], pt[1], pt[2]))
+
+        f.write('</Gesture>')
