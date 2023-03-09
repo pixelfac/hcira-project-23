@@ -5,9 +5,9 @@ Aravind S
 Nathan Harris
 Shashanka Bhat
 
-a)
+a) We made some minor pathing changes moving our code from reading the existing data to reading our user data, but overall our code remained much the same from the previous part.
 
-b)
+b) The last 20 lines or so of 'test.py' were additions made for this part to construct the output csv file with the appropriate Total and Average accuracy parameters.
 
 c) Our naming conventions and formatting from part 4 was not entirely in line with what GHoST expected from out files, so I wrote 'fix_xml.py' in '/src/dataset/' to iterate through dataset and fix the errors as we encountered them. Otherwise, we had no issues with using GHoST and we were able to obtain heatmaps for all users.
 
