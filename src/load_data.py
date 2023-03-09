@@ -34,7 +34,8 @@ from unistroke import Unistroke, Point
 
 data = {}
 
-cwd = os.getcwd() + '/xml/xml_logs/'
+cwd = os.getcwd() + '\\src' + '\\dataset\\'
+print(cwd)
 # dirs = [x[0] for x in next(os.walk('.'))]
 directory_contents = os.listdir(cwd)
 # print(directory_contents)
@@ -44,6 +45,7 @@ for x in directory_contents:
     # print(x)
     # if os.path.isdir(x):
     index = x.find('pilot')
+    index = x.find('fix_xml')
     if index < 0:
         users.append(x)
 
@@ -52,14 +54,14 @@ for x in directory_contents:
 gestures = []
 for user in users:
     # print("user: " + user)
-    path = os.getcwd() + "\\xml\\xml_logs\\" + user + "\\medium\\"
-    # print(path)
+    path = cwd + user + "\\"
+    print(path)
     # print(os.listdir(path))
     temp = []
     for file in os.listdir(path):
         temp.append(path + file)
     gestures.append(temp)
-
+    # print(gestures)
 # print(len(gestures[0]))
 # print(gestures[0][0])
 
@@ -79,11 +81,12 @@ for user in users:
 for user_index in range(0, len(users)):
     # print("user_index: " + str(user_index))
     # print(index)
-    user = 'user' + '_' + str(user_index)
+    # user = 'user' + '_' + str(user_index)
+    user = users[user_index]
     data[user] = {}
     # print("gesture: " + str(len(gestures[user_index])))
     for gesture_index in range(0, len(gestures[user_index])):
-        # print(gestures[user_index][gesture_index])
+        print(gestures[user_index][gesture_index])
         document = ET.parse(gestures[user_index][gesture_index])
         gesture_name = document.getroot().attrib['Name']
         digit_index = re.search(r"\d", gesture_name)
@@ -124,6 +127,7 @@ for user_index in range(0, len(users)):
 
 
 print("data size----------------------------------")
-print(len(data['user_0']['arrow'][7].points))
+# print(len(data['user_0']['arrow'][7].points))
 
-print(len(data['user_0']['triangle']))
+# print(len(data['user_0']['triangle']))
+print(data.keys())
