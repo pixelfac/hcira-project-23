@@ -6,10 +6,7 @@ from output_util import save_to_xml
 import time
 from templates import templates
 from preprocess_dollar_one import preprocess_points_example
-from output_util import save_to_xml
-import time
-from templates import templates
-from preprocess_dollar_one import preprocess_points_example
+
 
 """
 Project 1 for HCIRA, Spring '23
@@ -44,10 +41,6 @@ def init_coords(event):
     clear_canvas()
     current_time = int(round(time.time() * 1000))
     coords.append([event.x, event.y, current_time])
-    # clear_canvas(event)
-    clear_canvas()
-    current_time = int(round(time.time() * 1000))
-    coords.append([event.x, event.y, current_time])
 
 
 # Draws on canvas
@@ -59,8 +52,7 @@ def draw_line(event):
         label_current_coord["text"] = "Current coordinate: x=" + str(event.x) + ", y=" + str(event.y)
     current_time = int(round(time.time() * 1000))
     coords.append([event.x, event.y, current_time])
-    current_time = int(round(time.time() * 1000))
-    coords.append([event.x, event.y, current_time])
+
     canvas.old_coords = event.x, event.y
 
 
@@ -129,8 +121,6 @@ def process_line(event):
 # Clear the canvas
 def clear_canvas():
     print("CLEARING")
-def clear_canvas():
-    print("CLEARING")
     canvas.delete('all')  # delete all objects on canvas
     coords.clear()  # empty coords list
 
@@ -147,22 +137,6 @@ def go_next_sample():
     current_shape = get_current_shape(current_shape_number)
     save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
 
-# process to next sample
-def go_next_sample():
-    global current_sample_number
-    global current_shape_number
-    global label_gesture_prompt
-
-    draw_line_temp_canvas()
-
-    # save current drawing
-    current_shape = get_current_shape(current_shape_number)
-    save_to_xml(coords, current_shape, DATA_COLLECTION_USER, current_sample_number)
-
-    print(current_sample_number)
-    current_sample_number = current_sample_number + 1
-    label = f'Please draw the following shape : {current_shape}. Sample number: {current_sample_number}'
-    label_gesture_prompt.config(text=label)
     print(current_sample_number)
     current_sample_number = current_sample_number + 1
     label = f'Please draw the following shape : {current_shape}. Sample number: {current_sample_number}'
@@ -174,8 +148,6 @@ def go_next_sample():
         next_gesture_button["state"] = "normal"
         label_gesture_prompt.config(text="Click 'Next Gesture'")
         # return
-        label_gesture_prompt.config(text="Click 'Next Gesture'")
-        # return
 
     # if reached end of samples
     if current_sample_number == total_sample_size + 1:
@@ -189,27 +161,8 @@ def go_next_sample():
             label_gesture_prompt.config(text="Click 'Next Gesture'")
         return
     clear_canvas()
-    # if reached end of samples
-    if current_sample_number == total_sample_size + 1:
-        next_gesture_button["state"] = "normal"
-        print(str(current_shape_number))
-        if current_shape_number == 16:
-            label_gesture_prompt.config(text="All done!! Thank you!")
-            next_button["state"] = "disabled"
-            next_gesture_button["state"] = "disabled"
-        else:
-            label_gesture_prompt.config(text="Click 'Next Gesture'")
-        return
-    clear_canvas()
 
 
-def next_gesture_button_handle():
-    global current_sample_number
-    global current_shape_number
-    global label_gesture_prompt
-
-    # iterate data tracking variables
-    current_shape_number = current_shape_number + 1
 def next_gesture_button_handle():
     global current_sample_number
     global current_shape_number
@@ -231,16 +184,8 @@ def next_gesture_button_handle():
     label_example_text = f'Example gesture: {current_shape}'
     label_example.config(text=label_example_text)
     draw_line_temp_canvas()
-    label = f'Please draw the following shape : {current_shape}. Sample number: {current_sample_number}'
-    label_gesture_prompt.config(text=label)
-    clear_canvas()
-    canvas_temp.delete('all')
-    label_example_text = f'Example gesture: {current_shape}'
-    label_example.config(text=label_example_text)
-    draw_line_temp_canvas()
 
 ###################
-# Program Start ##
 # Program Start ##
 ###################
 
@@ -248,21 +193,14 @@ def next_gesture_button_handle():
 
 win = tk.Tk()  # init window
 win.geometry("1000x600")  # set window dimensions
-win.geometry("1000x600")  # set window dimensions
 
 
 # Canvas
 canvas = tk.Canvas(win, width=400, height=400, highlightthickness=1, highlightbackground="black")
-canvas = tk.Canvas(win, width=400, height=400, highlightthickness=1, highlightbackground="black")
 # place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
-canvas.place(relx=0.76, rely=0.5, anchor="center")
 canvas.place(relx=0.76, rely=0.5, anchor="center")
 canvas.old_coords = None
 coords = []  # store coordinates
-
-canvas_temp = tk.Canvas(win, width=400, height=400, highlightthickness=1, highlightbackground="black")
-# place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
-canvas_temp.place(relx=0.255, rely=0.5, anchor="center")
 
 canvas_temp = tk.Canvas(win, width=400, height=400, highlightthickness=1, highlightbackground="black")
 # place adds canvas to parent (window), and also can adjust scaling/sizing relative to parent
@@ -289,17 +227,6 @@ else:
     # for live recognition
     label_recognised_candidate = tk.Label(text="")
     label_recognised_candidate.place(y=65, x=0)
-if DATA_COLLECTION_MODE:
-    # for data collection
-    label_gesture_prompt = tk.Label(text='Please draw the following shape : {}. Sample number: {}'.format(get_current_shape(1), current_sample_number))
-    label_gesture_prompt.place(y=70, x=600)
-    label_example = tk.Label(text='Example gesture: {}'.format(get_current_shape(1)))
-    label_example.place(y=70, x=150)
-    draw_line_temp_canvas()
-else:
-    # for live recognition
-    label_recognised_candidate = tk.Label(text="")
-    label_recognised_candidate.place(y=65, x=0)
 
 win.title("$1 gesture recognition")
 
@@ -310,17 +237,7 @@ win.title("$1 gesture recognition")
 # button to add next sample
 next_button = tk.Button(win, text="Next", fg="red", state="normal", command=go_next_sample, height=1, width=10)
 next_button.place(y=520, x=410)
-######################
-# creating buttons
-######################
 
-# button to add next sample
-next_button = tk.Button(win, text="Next", fg="red", state="normal", command=go_next_sample, height=1, width=10)
-next_button.place(y=520, x=410)
-
-# button to prompt next gesture
-next_gesture_button = tk.Button(win, text="Next Gesture", fg="red", state="disabled", command=next_gesture_button_handle)
-next_gesture_button.place(y=560, x=460)
 # button to prompt next gesture
 next_gesture_button = tk.Button(win, text="Next Gesture", fg="red", state="disabled", command=next_gesture_button_handle)
 next_gesture_button.place(y=560, x=460)
@@ -328,17 +245,8 @@ next_gesture_button.place(y=560, x=460)
 # button to reset the canvas
 reset_button = tk.Button(win, text="Reset Canvas", fg="red", command=clear_canvas)
 reset_button.place(y=520, x=510)
-# button to reset the canvas
-reset_button = tk.Button(win, text="Reset Canvas", fg="red", command=clear_canvas)
-reset_button.place(y=520, x=510)
-
 
 # set keybinds
-canvas.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
-canvas.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
-canvas.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
-# win.bind('<ButtonPress-3>', clear_canvas)  # on RightClick, clear canvas and coords list
-# win.bind('<space>', process_line)  # On pressing space bar, recognise the gesture
 canvas.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing
 canvas.bind('<B1-Motion>', draw_line)  # when LeftClick is held and mouse is moving, call draw_line() function
 canvas.bind('<ButtonRelease-1>', process_line)  # resets line drawing variables
