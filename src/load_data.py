@@ -81,7 +81,8 @@ for user in users:
 for user_index in range(0, len(users)):
     # print("user_index: " + str(user_index))
     # print(index)
-    user = 'user' + '_' + str(user_index)
+    # user = 'user' + '_' + str(user_index)
+    user = users[user_index]
     data[user] = {}
     # print("gesture: " + str(len(gestures[user_index])))
     for gesture_index in range(0, len(gestures[user_index])):
