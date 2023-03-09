@@ -215,31 +215,40 @@ def translate_to_origin(points):
 def recognize(points, n, templates=default_templates):
     """
     Method to match the set of points against the template
-    :param points: array of coordinates
+    :param points: list of coordinates
     :param n : number of points
-    :param angle_step: delta by which angle will be changed
-    :param angle_range: range of acceptable angle
-    :param phi: constant value
-    :param square_size: size of scaled bounding box
+    :param templates: list of Unistroke objects
     :return: chosen template and score
     """
     number_of_points = n
-    points = resample_points(list(points), number_of_points)
-    points = rotate_to_zero(list(points))
-    points = scale_to_square(list(points), square_size=square_size)
-    points = translate_to_origin(list(points))
+    points = preprocess_points(points)
+
     b = float('inf')
-    best_template = None
+
+    chosen_template = None
+    
+    # if templates is default_templates:
+    #     for template in templates:
+    #         template.points = preprocess_points(template.points)
+    scores = []
     for template in templates:
         distance = distance_at_best_angle(points, template.points, -angle_range, angle_range, angle_step, phi)
-        print(template.label)
-        print(len(template.points))
-        print(distance)
-        if distance < b:
-            b = distance
-            best_template = template
+
+        # if distance < b:
+        #     b = distance
+        #     chosen_template = template
+        score = 1 - distance / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
+        temp_score = [template.label, score]
+        scores.append(temp_score)
+
     score = 1 - b / (0.5 * np.sqrt(square_size ** 2 + square_size ** 2))
-    return best_template, score
+    final_scores = sorted(scores, key=lambda x: x[1], reverse=True)
+    # for temp in final_scores:
+    #     print(temp[0] + ", " + str(temp[1]))
+    # return chosen_template, score
+    if len(final_scores) >= 50:
+        final_scores = final_scores[0:50]
+    return final_scores
 
 
 def distance_at_best_angle(points, template_pts, angle_a, angle_b, angle_step, phi):

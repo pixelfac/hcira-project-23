@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<<<<<<< Updated upstream
 <Gesture Name="circle08" Subject="user06" Number="8" NumPts="105">
-=======
-<Gesture Name="circle8" Subject="user06" Number="8" NumPts="105">
->>>>>>> Stashed changes
    <Point X="327" Y="260" T="1677703714386" />
    <Point X="326" Y="260" T="1677703714434" />
    <Point X="326" Y="259" T="1677703714438" />

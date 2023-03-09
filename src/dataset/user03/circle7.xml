@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<<<<<<< Updated upstream
 <Gesture Name="circle07" Subject="user03" Number="7" NumPts="76">
 <Point X="220" Y="115" T="2" />
 <Point X="217" Y="115" T="3" />
@@ -77,83 +76,4 @@
 <Point X="223" Y="109" T="75" />
 <Point X="221" Y="108" T="76" />
 <Point X="219" Y="108" T="77" />
-=======
-<Gesture Name="circle7" Subject="user03" Number="7" NumPts="76">
-<Point X="220" Y="115" />
-<Point X="217" Y="115" />
-<Point X="213" Y="115" />
-<Point X="209" Y="115" />
-<Point X="206" Y="115" />
-<Point X="202" Y="115" />
-<Point X="198" Y="116" />
-<Point X="195" Y="116" />
-<Point X="191" Y="117" />
-<Point X="187" Y="119" />
-<Point X="183" Y="121" />
-<Point X="179" Y="123" />
-<Point X="175" Y="126" />
-<Point X="170" Y="129" />
-<Point X="166" Y="133" />
-<Point X="162" Y="137" />
-<Point X="159" Y="141" />
-<Point X="155" Y="145" />
-<Point X="152" Y="150" />
-<Point X="149" Y="155" />
-<Point X="147" Y="161" />
-<Point X="145" Y="167" />
-<Point X="143" Y="172" />
-<Point X="142" Y="178" />
-<Point X="141" Y="183" />
-<Point X="141" Y="189" />
-<Point X="141" Y="194" />
-<Point X="143" Y="198" />
-<Point X="145" Y="202" />
-<Point X="147" Y="206" />
-<Point X="150" Y="209" />
-<Point X="154" Y="211" />
-<Point X="158" Y="214" />
-<Point X="162" Y="215" />
-<Point X="167" Y="217" />
-<Point X="172" Y="218" />
-<Point X="177" Y="218" />
-<Point X="183" Y="218" />
-<Point X="188" Y="218" />
-<Point X="194" Y="217" />
-<Point X="200" Y="215" />
-<Point X="205" Y="213" />
-<Point X="211" Y="211" />
-<Point X="217" Y="209" />
-<Point X="222" Y="205" />
-<Point X="227" Y="202" />
-<Point X="232" Y="198" />
-<Point X="236" Y="194" />
-<Point X="240" Y="190" />
-<Point X="244" Y="185" />
-<Point X="247" Y="181" />
-<Point X="249" Y="176" />
-<Point X="252" Y="171" />
-<Point X="253" Y="166" />
-<Point X="255" Y="161" />
-<Point X="255" Y="157" />
-<Point X="256" Y="152" />
-<Point X="256" Y="148" />
-<Point X="256" Y="144" />
-<Point X="254" Y="139" />
-<Point X="253" Y="136" />
-<Point X="251" Y="132" />
-<Point X="249" Y="128" />
-<Point X="247" Y="125" />
-<Point X="245" Y="122" />
-<Point X="242" Y="120" />
-<Point X="240" Y="117" />
-<Point X="237" Y="115" />
-<Point X="235" Y="113" />
-<Point X="232" Y="112" />
-<Point X="230" Y="111" />
-<Point X="228" Y="110" />
-<Point X="225" Y="109" />
-<Point X="223" Y="109" />
-<Point X="221" Y="108" />
-<Point X="219" Y="108" />
->>>>>>> Stashed changes
 </Gesture>

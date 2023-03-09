@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<<<<<<< Updated upstream
 <Gesture Name="v01" Subject="user03" Number="1" NumPts="61">
 <Point X="146" Y="254" T="2" />
 <Point X="146" Y="252" T="3" />
@@ -62,68 +61,4 @@
 <Point X="248" Y="240" T="60" />
 <Point X="249" Y="240" T="61" />
 <Point X="250" Y="240" T="62" />
-=======
-<Gesture Name="v1" Subject="user03" Number="1" NumPts="61">
-<Point X="146" Y="254" />
-<Point X="146" Y="252" />
-<Point X="147" Y="251" />
-<Point X="147" Y="250" />
-<Point X="147" Y="249" />
-<Point X="147" Y="248" />
-<Point X="147" Y="247" />
-<Point X="148" Y="247" />
-<Point X="148" Y="248" />
-<Point X="149" Y="249" />
-<Point X="149" Y="251" />
-<Point X="150" Y="253" />
-<Point X="151" Y="256" />
-<Point X="152" Y="260" />
-<Point X="153" Y="264" />
-<Point X="154" Y="269" />
-<Point X="155" Y="274" />
-<Point X="157" Y="280" />
-<Point X="159" Y="285" />
-<Point X="160" Y="291" />
-<Point X="162" Y="296" />
-<Point X="164" Y="301" />
-<Point X="166" Y="305" />
-<Point X="169" Y="309" />
-<Point X="171" Y="311" />
-<Point X="173" Y="314" />
-<Point X="175" Y="316" />
-<Point X="177" Y="318" />
-<Point X="179" Y="319" />
-<Point X="180" Y="320" />
-<Point X="182" Y="320" />
-<Point X="184" Y="320" />
-<Point X="185" Y="320" />
-<Point X="187" Y="319" />
-<Point X="188" Y="317" />
-<Point X="190" Y="315" />
-<Point X="192" Y="312" />
-<Point X="194" Y="308" />
-<Point X="196" Y="304" />
-<Point X="199" Y="299" />
-<Point X="202" Y="294" />
-<Point X="204" Y="289" />
-<Point X="207" Y="284" />
-<Point X="211" Y="279" />
-<Point X="214" Y="273" />
-<Point X="218" Y="268" />
-<Point X="221" Y="264" />
-<Point X="225" Y="259" />
-<Point X="228" Y="255" />
-<Point X="232" Y="252" />
-<Point X="235" Y="249" />
-<Point X="237" Y="246" />
-<Point X="240" Y="244" />
-<Point X="242" Y="243" />
-<Point X="244" Y="242" />
-<Point X="245" Y="241" />
-<Point X="246" Y="240" />
-<Point X="247" Y="240" />
-<Point X="248" Y="240" />
-<Point X="249" Y="240" />
-<Point X="250" Y="240" />
->>>>>>> Stashed changes
 </Gesture>

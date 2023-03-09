@@ -14,27 +14,29 @@ recognize_score is list of list of numbers, tracking the recognize score per use
 recognize_acc is list of list of numbers, tracking %correct per user, per gesture
 '''
 # number ot times to tests each group
-iterations = 1
+iterations = 10
 users = list(data.keys())
 recognize_score = {}
 rows = []
+print(users)
 
 for user_index in range(0, len(data.keys())):
     recognize_score[users[user_index]] = {}
     for gesture_index in data[users[0]].keys():
         recognize_score[users[user_index]][gesture_index] = 0.0
 
-accuracy = []
+accuracy = {}
 
 # for user_index in range(0,len(users)):
-for user_index in range(0,1):
+for user_index in range(0,len(users)):
     print("user: " + users[user_index])
     # if users[user_index] not in recognize_score.keys():
     #     recognize_score[users[user_index]] = {}
         # pass
     # else:
     #     recognize_score[users[user_index]] = {}
-    user_accuracy = []
+    accuracy[users[user_index]] = [0, 0]
+    # user_accuracy = []
     for num_examples in range(1,10):
         print("num_examples: " + str(num_examples))
         for i in range(0,iterations):
@@ -48,6 +50,7 @@ for user_index in range(0,1):
                 # sample is random list of num_examples+1 elements randomly picked from gesture
                 # print("======= length: " + str(len(data[users[user_index]][gesture])))
                 sample = random.sample(data[users[user_index]][gesture], num_examples+1)
+                # print(sample)
                 # last element in sample
                 candidate = sample.pop()
                 candidates.append(candidate)
@@ -64,6 +67,8 @@ for user_index in range(0,1):
                 temp_row = [users[user_index]]
                 # template, score = recognize(candidate.points, 64, examples)
                 scores = recognize(candidate.points, 64, examples)
+                # print('***')
+                # print(scores)
                 # print(template.label + ", actual: " + candidate.label)
                 template = scores[0][0]
                 # template_digit_index = re.search(r"\d", template.label)
@@ -73,28 +78,44 @@ for user_index in range(0,1):
                 candidate_digit_index = re.search(r"\d", candidate.label)
                 candidate_label = candidate.label[0:candidate_digit_index.start()]
                 temp_row.append(candidate_label)
-                temp_row.append(str(i+1))
-                temp_row.append(str(num_examples * 16))
+                temp_row.append(i+1)
+                temp_row.append(num_examples)
+                temp_row.append(num_examples * 16)
                 example_arr = []
                 for example in examples:
                     example_arr.append(example.label)
                 temp_row.append(example_arr)
-                temp_row.append([scores[0][0], scores[0][1]])
-                score_arr = []
-                for score in scores:
-                    score_arr.append([score[0], score[1]])
-                temp_row.append(score_arr)
+                temp_row.append([candidate.label])
+                temp_row.append(template_label)
+                # temp_row.append([scores[0][0], scores[0][1]])
+                # score_arr = []
+                # for score in scores:
+                    # score_arr.append([score[0], score[1]])
+                # temp_row.append(score_arr)
                 # print(template_label + ", actual: " + candidate_label)
                 # if template.label == candidate.label:
+                accuracy[users[user_index]][1] = accuracy[users[user_index]][1] + 1
                 if template_label == candidate_label:
+                    temp_row.append(1)
+                    #print(temp_row)
                     # print("CORRECT")
                     # print(recognize_score[users[user_index]][gesture])
+                    accuracy[users[user_index]][0] = accuracy[users[user_index]][0] + 1
                     for gesture_index_temp in data[users[user_index]]:
                         recognize_score[users[user_index]][gesture_index_temp] = \
                             recognize_score[users[user_index]][gesture_index_temp] + 1.0
                     # recognize_score[users[user_index]][gesture] = recognize_score[users[user_index]][gesture] + 1.0
+                
+                else:
+                    # rows.append(temp_row)
+                    temp_row.append(0)
+                temp_row.append(scores[0][1])
+                temp_row.append(scores[0][0])
+                score_arr = []
+                for score in scores:
+                    score_arr.append([score[0], score[1]])
+                temp_row.append(score_arr)
                 rows.append(temp_row)
-
             # for gesture in range(0,16):
             #     pass
             #     # recognize candidate against [example][gesture] template
@@ -116,23 +137,27 @@ print(recognize_score[users[0]])
 
 # for users in data.keys():
 #     print(recognize_score[users])
+
 print(len(rows))
 print(rows[0])
+print(accuracy['user_0'][0] / accuracy['user_0'][1])
 
 df = create_empty_dataframe()
 for row in rows:
+    print(len(row))
     df = add_list_to_dataframe(df, row)
 
 df = add_list_to_dataframe(df, ["", "", "", "", "", "", "", "", "", "", "", ""])
 
 user_accuracy_score_array = []
+print(accuracy)
 for user_index in range(0, len(users)):
     df = add_list_to_dataframe(df, ["Total Accuracy for " + users[user_index] + ": ", accuracy[users[user_index]][0] / accuracy[users[user_index]][1], "", "", "", "", "", "", "", "", "", ""])
     user_accuracy_score_array.append(accuracy[users[user_index]][0] / accuracy[users[user_index]][1])
 
 print(user_accuracy_score_array)
 
-average = sum(user_accuracy_score_array) / len(user_accuracy_score_array) + 1
+average = sum(user_accuracy_score_array) / len(user_accuracy_score_array)
 
 df = add_list_to_dataframe(df, ["", "", "", "", "", "", "", "", "", "", "", ""])
 
