@@ -7,6 +7,7 @@ import time
 from templates import templates
 from preprocess_dollar_one import preprocess_points_example
 
+
 """
 Project 1 for HCIRA, Spring '23
 
@@ -30,6 +31,9 @@ current_sample_number = 1
 total_gestures = 16
 total_sample_size = 2
 
+total_gestures = 16
+total_sample_size = 2
+
 
 # Initialise coords list with first point
 def init_coords(event):
@@ -48,7 +52,26 @@ def draw_line(event):
         label_current_coord["text"] = "Current coordinate: x=" + str(event.x) + ", y=" + str(event.y)
     current_time = int(round(time.time() * 1000))
     coords.append([event.x, event.y, current_time])
+
     canvas.old_coords = event.x, event.y
+
+
+def draw_line_temp_canvas():
+    # if canvas.old_coords:  # if canvas object has property 'old_coords'
+    #     x1, y1 = canvas.old_coords
+    #     canvas.create_line(event.x, event.y, x1, y1)
+    #     # canvas.itemconfig(label_current_coord, text="Current coordinate: x=" + str(event.x) + ", y=" + str(event.y))
+    #     label_current_coord["text"] = "Current coordinate: x=" + str(event.x) + ", y=" + str(event.y)
+    # current_time = int(round(time.time() * 1000))
+    # coords.append([event.x, event.y, current_time])
+    # canvas.old_coords = event.x, event.y
+    points = []
+    for t in templates:
+        if t.label == get_current_shape(current_shape_number):
+            points = t.points
+    points = preprocess_points_example(points)
+    lines = [(points[n][0], points[n][1]) for n in range(0, len(points))]
+    canvas_temp.create_line(lines)
 
 
 def draw_line_temp_canvas():
@@ -77,6 +100,12 @@ def reset_canvas_coords(event):
 
 def process_line(event):
     reset_canvas_coords(event)
+    if len(coords) < 2:
+        return
+    
+    # if we're collecting data
+    if DATA_COLLECTION_MODE:
+        return
     if len(coords) < 2:
         return
     
@@ -161,6 +190,7 @@ def next_gesture_button_handle():
 ###################
 
 
+
 win = tk.Tk()  # init window
 win.geometry("1000x600")  # set window dimensions
 
@@ -215,7 +245,6 @@ next_gesture_button.place(y=560, x=460)
 # button to reset the canvas
 reset_button = tk.Button(win, text="Reset Canvas", fg="red", command=clear_canvas)
 reset_button.place(y=520, x=510)
-
 
 # set keybinds
 canvas.bind('<ButtonPress-1>', init_coords)  # on LeftClick, prepare for line drawing

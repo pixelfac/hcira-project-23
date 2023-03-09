@@ -14,7 +14,7 @@ template_dataframe =  pd.DataFrame (
     "Result" : pd.Series(dtype = 'str'),
     "Recognizer Result Score" : pd.Series(dtype = 'float'),
     "Recognizer Result Best Match" : pd.Series(dtype = 'str'),
-    "Recognizer Resilr N Best Sorted" : pd.Series(dtype= 'object')
+    "Recognizer Result N Best Sorted" : pd.Series(dtype= 'object')
    }
 )
 
@@ -73,7 +73,7 @@ def add_data_to_dataframe(dataframe , user, gesture_type, iteration_number, numb
         return "Error"  #can use raise exception for this, based on main function loop.
 
 
-def convert_dataframe_to_csv (dataframe, filepath):
+def convert_dataframe_to_csv (dataframe):
     """
     Utility Method to convert dataframe to csv
     :param dataframe: Final dataframe as pandas dataframe
@@ -96,7 +96,6 @@ def add_list_to_dataframe(dataframe, row):
     temp_dataframe = dataframe.copy()
 
     temp_dataframe.loc[len(temp_dataframe)] = row
-    temp_dataframe.concat
 
     return temp_dataframe
 
