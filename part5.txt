@@ -9,6 +9,6 @@ a)
 
 b)
 
-c)
+c) Our naming conventions and formatting from part 4 was not entirely in line with what GHoST expected from out files, so I wrote 'fix_xml.py' in '/src/dataset/' to iterate through dataset and fix the errors as we encountered them. Otherwise, we had no issues with using GHoST and we were able to obtain heatmaps for all users.
 
-d)
+d) Once we had computed the heatmap for our dataset, the lens that was the most revealing about the data was the default 'Shape Error' heatmap setting. Other lenses that looked at turning angle or drawing speed were not very insightful because our data did not record timing points for all datapoints and the turning angle was already very obvious from the shape of the gesture.
