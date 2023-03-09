@@ -105,12 +105,12 @@ for user_index in range(0,len(users)):
                         recognize_score[users[user_index]][gesture_index_temp] = \
                             recognize_score[users[user_index]][gesture_index_temp] + 1.0
                     # recognize_score[users[user_index]][gesture] = recognize_score[users[user_index]][gesture] + 1.0
-                
                 else:
-                    # rows.append(temp_row)
                     temp_row.append(0)
                 temp_row.append(scores[0][1])
                 temp_row.append(scores[0][0])
+                # temp_row.append([scores[0][0], scores[0][1]])
+                # temp_row.append(template_label)
                 score_arr = []
                 for score in scores:
                     score_arr.append([score[0], score[1]])
@@ -140,6 +140,7 @@ print(recognize_score[users[0]])
 
 print(len(rows))
 print(rows[0])
+
 print(accuracy['user_0'][0] / accuracy['user_0'][1])
 
 df = create_empty_dataframe()

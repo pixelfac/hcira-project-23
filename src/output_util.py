@@ -11,7 +11,7 @@ template_dataframe =  pd.DataFrame (
     "Training Set Contents" : pd.Series(dtype= 'object'),
     "Candidate" : pd.Series(dtype = 'str'),
     "Recognizer Result Gesture Type" : pd.Series(dtype = 'str'),
-    "Result" : pd.Series(dtype = 'str'),
+    "Result" : pd.Series(dtype = 'int'),
     "Recognizer Result Score" : pd.Series(dtype = 'float'),
     "Recognizer Result Best Match" : pd.Series(dtype = 'str'),
     "Recognizer Result N Best Sorted" : pd.Series(dtype= 'object')
@@ -81,8 +81,9 @@ def convert_dataframe_to_csv (dataframe):
     :return :
     """
     # output_file_path = filepath + "\export_dataframe.csv"
-    output_file_path = os.getcwd() + "\\output.csv"
+    output_file_path = os.getcwd() + "\\output_large.csv"
     dataframe.to_csv(output_file_path, index=False, header=True)
+    # dataframe.to_csv()
 
     #path os library  can be used for getthing the
 
