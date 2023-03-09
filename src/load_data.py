@@ -127,7 +127,7 @@ for user_index in range(0, len(users)):
 
 
 print("data size----------------------------------")
-print(len(data['user_0']['arrow'][7].points))
+# print(len(data['user_0']['arrow'][7].points))
 
-print(len(data['user_0']['triangle']))
+# print(len(data['user_0']['triangle']))
 print(data.keys())
