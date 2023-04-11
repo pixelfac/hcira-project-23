@@ -118,6 +118,7 @@ print(recognize_score[users[0]])
 #     print(recognize_score[users])
 print(len(rows))
 print(rows[0])
+# accuracyprint(accuracy['user_0'][0] / accuracy['user_0'][1])
 
 df = create_empty_dataframe()
 for row in rows:
