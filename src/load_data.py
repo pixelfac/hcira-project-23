@@ -34,7 +34,8 @@ from unistroke import Unistroke, Point
 
 data = {}
 
-cwd = os.getcwd() + '\\src' + '\\dataset\\'
+# cwd = os.getcwd() + '\\src' + '\\dataset\\' + '\\10-stylus-MEDIUM'
+cwd = os.getcwd() + '\\src' + '\\mmg\\' + '\\10-stylus-MEDIUM'
 print(cwd)
 # dirs = [x[0] for x in next(os.walk('.'))]
 directory_contents = os.listdir(cwd)
