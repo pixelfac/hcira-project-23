@@ -1,7 +1,7 @@
 import math
 import numpy as np
 # from templates import templates as default_templates
-from load_data_mmg import data_mmg_flattened
+# from load_data_mmg import data_mmg_flattened
 
 EPSILON = 0.5
 
@@ -151,7 +151,7 @@ def resample(points, n):
     :return: new_points array after applying Resampling step.
     """
 
-    print(len(points))
+    # print(len(points))
     path_length = get_path_length(points)
     length = path_length / (n - 1)
     d = 0
@@ -162,6 +162,9 @@ def resample(points, n):
         prev_point = temp_points[i - 1]
         curr_point = temp_points[i]
         if prev_point[2] == curr_point[2]:
+            # print("resample:")
+            # print(prev_point)
+            # print(curr_point)
             dist = get_distance([prev_point, curr_point])
             if (d + dist) >= length:
                 qx = temp_points[i - 1][0] + ((length - d) / dist) * (temp_points[i][0] - temp_points[i - 1][0])
@@ -238,11 +241,13 @@ def greedy_cloud_match(points, template, n):
 
 
 # def recognize(points, n=32, templates=default_templates):
-def recognize(points, n=32, templates=data_mmg_flattened):
+# def recognize(points, n=32, templates=data_mmg_flattened):
+def recognize(points, n, templates):
     points = normalize(points, n)
     # print("points length: " + str(len(points)))
     score = float("inf")
     result = None
+    
 
     for template in templates:
         # template.points = normalize(template.points, n)
@@ -252,26 +257,39 @@ def recognize(points, n=32, templates=data_mmg_flattened):
         if score > d:
             score = d
             result = template
+        # scores.append([template.label, d])
 
         # if result == None or score == 0:
         #     return None, score
         # else:
         #     return result, score
 
+    # # final_scores = sorted(scores, key=lambda x: x[1], reverse=True)
+    # # # for temp in final_scores:
+    # # #     print(temp[0] + ", " + str(temp[1]))
+    # # # return chosen_template, score
+    # if len(final_scores) >= 50:
+    #     final_scores = final_scores[0:50]
+    # return final_scores
+    # print()
     return result, score
 
 
-def recognize_with_n_best(points, n=32, templates=data_mmg_flattened):
+# def recognize_with_n_best(points, n=32, templates=data_mmg_flattened):
+def recognize_with_n_best(points, n, templates):
     number_of_points = n
-    points = normalize(points, n)
+    # points = normalize(points, n)
     # score = float("inf")
     result = []
+    scores = []
 
     for template in templates:
+        # print("normalize:" + str(template.points))
         # template.points = normalize(template.points, n)
 
         d = greedy_cloud_match(points, template.points, n)
         result.append([template, d])
+        scores.append([template.label, d])
         # if score > d:
         #     score = d
         #     result = template
@@ -281,7 +299,15 @@ def recognize_with_n_best(points, n=32, templates=data_mmg_flattened):
         # else:
         #     return result, score
 
-    return sorted(result)
+    final_scores = sorted(scores, key=lambda x: x[1])
+    # for temp in final_scores:
+    #     print(temp[0] + ", " + str(temp[1]))
+    # return chosen_template, score
+    if len(final_scores) >= 50:
+        final_scores = final_scores[0:50]
+    return final_scores
+
+    # return sorted(result)
 
 
 def preprocess_points(points):
@@ -296,5 +322,5 @@ def preprocess_points(points):
     return points
 
 
-for template in data_mmg_flattened:
-    template.points = normalize(template.points)
+# for template in data_mmg_flattened:
+#     template.points = normalize(template.points)

@@ -1,6 +1,7 @@
 import math
 import numpy as np
 from templates import templates as default_templates
+from load_data_mmg import data_mmg_1_flattened
 
 """
 Project 1 for HCIRA, Spring '23
@@ -123,7 +124,7 @@ def get_distance(points):
     :param points: array of points
     :return: dist b/w 2 points within the array
     """
-
+    print(points)
     dist_x = (points[1][0] - points[0][0]) ** 2
     dist_y = (points[1][1] - points[0][1]) ** 2
     dist = math.sqrt(dist_x + dist_y)
@@ -141,6 +142,7 @@ def get_path_length(points):
     n = len(points)
     for i in range(n - 1):
         curr_point = points[i]
+        print(len(curr_point))
         next_point = points[i + 1]
         dist = get_distance([curr_point, next_point])
         path_length = path_length + dist
@@ -201,18 +203,25 @@ def translate_to_origin(points):
     """
 
     centroid_x, centroid_y = get_centroid(np.array(points))
-    new_points = np.zeros((1, 2))
+    # new_points = np.zeros((1, 2))
+    new_points = []
 
     for point in points:
         q = np.array([0., 0.])
-        q[0] = point[0] - centroid_x
-        q[1] = point[1] - centroid_y
-        new_points = np.append(new_points, [q], 0)
+        q = []
+        # q[0] = point[0] - centroid_x
+        q.append(point[0] - centroid_x)
+        # q[1] = point[1] - centroid_y
+        q.append(point[1] - centroid_y)
+        new_points.append(q)
+        # new_points = np.append(new_points, [q], 0)
 
-    return new_points[1:]
+    # return new_points[1:]
+    return new_points
 
 
-def recognize(points, n, templates=default_templates):
+# def recognize(points, n, templates=default_templates):
+def recognize(points, n, templates=data_mmg_1_flattened):
     """
     Method to match the set of points against the template
     :param points: list of coordinates
@@ -221,6 +230,7 @@ def recognize(points, n, templates=default_templates):
     :return: chosen template and score
     """
     number_of_points = n
+    points = remove_stroke_id_for_unistroke(points)
     points = preprocess_points(points)
 
     b = float('inf')
@@ -343,5 +353,20 @@ def translate_to_center_new_canvas(points):
 # for template in default_templates:
 #     template.points = preprocess_points(template.points)
 
+def remove_stroke_id_for_unistroke(points):
+    new_points = []
+    for point in points :
+        # stroke_id = point.pop()
+        point = [point[0], point[1]]
+        print(len(point))
+        new_points.append(point)
+    
+    return new_points
+
 for template in default_templates:
+    template.points = remove_stroke_id_for_unistroke(template.points)
     template.points = preprocess_points_example(template.points)
+
+
+# for template in data_mmg_flattened:
+    

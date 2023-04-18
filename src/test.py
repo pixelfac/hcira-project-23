@@ -1,6 +1,8 @@
 import random
-from preprocess_dollar_one import recognize
-from load_data import data
+# from preprocess_dollar_one import recognize
+from preprocess_dollar_p import recognize_with_n_best , normalize
+# from load_data import data
+from load_data_mmg import data_mmg as data
 import re
 from output_util import create_empty_dataframe, add_list_to_dataframe, convert_dataframe_to_csv
 
@@ -14,7 +16,7 @@ recognize_score is list of list of numbers, tracking the recognize score per use
 recognize_acc is list of list of numbers, tracking %correct per user, per gesture
 '''
 # number ot times to tests each group
-iterations = 10
+iterations = 2
 users = list(data.keys())
 recognize_score = {}
 rows = []
@@ -37,7 +39,7 @@ for user_index in range(0,len(users)):
     #     recognize_score[users[user_index]] = {}
     accuracy[users[user_index]] = [0, 0]
     # user_accuracy = []
-    for num_examples in range(1,10):
+    for num_examples in range(1,3):
         print("num_examples: " + str(num_examples))
         for i in range(0,iterations):
             candidates = []
@@ -66,7 +68,8 @@ for user_index in range(0,len(users)):
             for candidate in candidates:
                 temp_row = [users[user_index]]
                 # template, score = recognize(candidate.points, 64, examples)
-                scores = recognize(candidate.points, 64, examples)
+                # scores = recognize(candidate.points, 64, examples)
+                scores = recognize_with_n_best(candidate.points, 32, examples)
                 # print('***')
                 # print(scores)
                 # print(template.label + ", actual: " + candidate.label)
@@ -127,7 +130,7 @@ for user_index in range(0,len(users)):
         # recognize_acc[user][gesture] = recognize_score[user][gesture] / 100
         for gesture_index_temp in data[users[user_index]]:
             recognize_score[users[user_index]][gesture_index_temp] = \
-                recognize_score[users[user_index]][gesture_index_temp] / 10.0
+                recognize_score[users[user_index]][gesture_index_temp] / 2.0
         # recognize_score[users[user_index]][gesture] = recognize_score[users[user_index]][gesture] / 10.0
 
 # output final avg acc per user
@@ -142,7 +145,7 @@ print(len(rows))
 print(rows[0])
 # accuracyprint(accuracy['user_0'][0] / accuracy['user_0'][1])
 
-print(accuracy['user_0'][0] / accuracy['user_0'][1])
+# print(accuracy['user_0'][0] / accuracy['user_0'][1])
 
 df = create_empty_dataframe()
 for row in rows:

@@ -1,7 +1,7 @@
 import tkinter as tk
 import numpy as np
-import preprocess_dollar_one as dollar1
-from preprocess_dollar_one import square_size, angle_range, angle_step, phi
+# import preprocess_dollar_one as dollar1
+# from preprocess_dollar_one import square_size, angle_range, angle_step, phi
 
 import preprocess_dollar_p as dollarp
 # from preprocess_dollar_p import remove_stroke_id_for_unistroke
@@ -56,6 +56,9 @@ def process_line(event):
     print("length starting: " + str(len(coords)))
     print("point: " + str(coords[0]))
     template, score = dollarp.recognize(coords, 32)
+    # scores = dollarp.recognize(coords, 32)
+    # print(scores[0])
+    # label_recognised_candidate["text"] = "Recognized Label: " + scores[0][0] + ", score: " + str(scores[0][1])
     label_recognised_candidate["text"] = "Recognized Label: " + template.label + ", score: " + str(score)
 
 
