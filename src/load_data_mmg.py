@@ -107,7 +107,7 @@ for user_index in range(0, len(users)):
             # points.append(stroke_points)
             stroke_num = stroke_num + 1
         # print(len(points))
-        gesture_obj = Multistroke(label=gesture_name, points=points)
+        gesture_obj = Multistroke(label=gesture_label, points=points)
         # gesture_obj.points = normalize(gesture_obj.points , 32)
         gesture_obj.points = preprocess_points(gesture_obj.points)
 
