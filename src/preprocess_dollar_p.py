@@ -1,6 +1,7 @@
 import math
 import numpy as np
-from templates import templates as default_templates
+# from templates import templates as default_templates
+from load_data_mmg import data_mmg_flattened
 
 EPSILON = 0.5
 
@@ -158,7 +159,7 @@ def resample(points, n):
 def normalize(points, n):
     resampled_points = resample(points, n)
     scaled_points = scale(resampled_points)
-    translated_points = translate_to_origin(scaled_points , n)
+    translated_points = translate_to_origin(scaled_points, n)
 
     return translated_points
 
@@ -188,7 +189,7 @@ def get_cloud_distance(points, template, n, start):
         if i == start:
             break
 
-    return  distance_sum
+    return distance_sum
 
 
 def greedy_cloud_match(points, template, n):
@@ -205,7 +206,8 @@ def greedy_cloud_match(points, template, n):
     return minimum
 
 
-def recognize(points, n=32, templates=default_templates):
+# def recognize(points, n=32, templates=default_templates):
+def recognize(points, n=32, templates=data_mmg_flattened):
     number_of_points = n
     points = normalize(points, n)
     score = float("inf")
@@ -261,3 +263,5 @@ def preprocess_points(points):
     points = scale(points)
     points = translate_to_origin(points)
     return points
+
+

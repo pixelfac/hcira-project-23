@@ -34,13 +34,14 @@ from preprocess_dollar_p import preprocess_points
 from multistroke import Point, Multistroke
 
 # cwd = os.getcwd() + '\\src' + '\\dataset\\' + '\\10-stylus-MEDIUM'
-cwd = os.getcwd() + '\\mmg' + '\\10-stylus-MEDIUM'
+cwd = os.getcwd() + '\\src' + '\\mmg' + '\\10-stylus-MEDIUM'
 print(cwd)
 # dirs = [x[0] for x in next(os.walk('.'))]
 directory_contents = os.listdir(cwd)
 print(directory_contents)
 
 data_mmg = {}
+data_mmg_flattened = []
 
 for file in directory_contents:
     document_path = cwd + '\\' + file
@@ -48,9 +49,14 @@ for file in directory_contents:
     document = ET.parse(document_path)
     gesture_name = document.getroot().attrib['Name']
     digit_index = re.search(r"\d", gesture_name)
-    gesture_label = gesture_name[0: digit_index.start()]
+    gesture_label = gesture_name[0: digit_index.start()-1]
+    print(gesture_label)
     points = []
     stroke_num = 1
+
+    if gesture_label in data_mmg and len(data_mmg[gesture_label]) == 3:
+        continue
+
     for stroke in document.getroot():
         # stroke_points = []
         for point in stroke:
@@ -78,3 +84,8 @@ for file in directory_contents:
 # dirs = [x[0] for x in os.walk(cwd)]
 
 print(len(data_mmg.keys()))
+print(len(data_mmg['X']))
+
+for key in data_mmg.keys():
+    for gesture_obj in data_mmg[key]:
+        data_mmg_flattened.append(gesture_obj)
