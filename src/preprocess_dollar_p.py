@@ -5,6 +5,21 @@ from load_data_mmg import data_mmg_flattened
 
 EPSILON = 0.5
 
+def remove_stroke_id_for_unistroke(points):
+
+    new_points = []
+
+    for point in points :
+        stroke_id = point.pop()
+        new_points.append(point)
+    
+    return new_points
+    # np_points = np.array(points)
+    # np_points_2d = np_points[: , : , 0]
+
+    # return np_points_2d.toli
+    # rst()
+
 
 def get_distance(points):
     #reused this method from $1 pre-processing
@@ -13,7 +28,8 @@ def get_distance(points):
     :param points: array of points
     :return: dist b/w 2 points within the array
     """
-
+    # temp = points[0]
+    # print(type(temp[1]))
     dist_x = (points[1][0] - points[0][0]) ** 2
     dist_y = (points[1][1] - points[0][1]) ** 2
     dist = math.sqrt(dist_x + dist_y)
@@ -33,9 +49,14 @@ def get_path_length(points):
     n = len(points)
     for i in range(1, n - 1):
         curr_point = points[i]
-        next_point = points[i + 1]
-        if curr_point[2] == next_point[2]:
-            dist = get_distance([curr_point, next_point])
+        prev_point = points[i - 1]
+        # print("curr point: " + str(len(curr_point)))
+        # print(curr_point)
+        # print("prev point: " + str(len(prev_point)))
+        # print(prev_point)
+        if curr_point[2] == prev_point[2]:
+            # print(prev_point[0])
+            dist = get_distance([prev_point, curr_point])
             path_length = path_length + dist
 
     return path_length
@@ -99,22 +120,24 @@ def get_centroid(points):
 def translate_to_origin(points):
     # reused this method from $1 pre-processing
     # needs to be changed
-    # print("HERE")
-    # print(points[0])
     centroid_x, centroid_y = get_centroid(np.array(points))
     # new_points = np.zeros((1, 3))
     new_points = []
 
     for point in points:
-        q = np.array([0., 0., 0.])
-        q[0] = point[0] - centroid_x
-        q[1] = point[1] - centroid_y
-        q[2] = point[2]
+        # q = np.array([0., 0., 0.])
+        q = []
+        # q[0] = point[0] - centroid_x
+        q.append(point[0] - centroid_x)
+        # q[1] = point[1] - centroid_y
+        q.append(point[1] - centroid_y)
+        # q[2] = point[2]
+        q.append(point[2])
         # print(q)
         new_points.append([q])
         # new_points = np.append(new_points, [q], 0)
 
-    return new_points[1:]
+    return new_points
 
 
 def resample(points, n):
@@ -128,6 +151,7 @@ def resample(points, n):
     :return: new_points array after applying Resampling step.
     """
 
+    print(len(points))
     path_length = get_path_length(points)
     length = path_length / (n - 1)
     d = 0
@@ -150,16 +174,18 @@ def resample(points, n):
         i = i + 1
 
     # Check if size of new array is exactly equal to required n. If not add the last point again to the array
+    # print("length: " + str(len(new_points)))
     if len(new_points) < n:
         new_points.append([new_points[-1][0], new_points[-1][1], new_points[-1][2]])
 
     return new_points
 
 
-def normalize(points, n):
+def normalize(points, n=32):
     resampled_points = resample(points, n)
     scaled_points = scale(resampled_points)
-    translated_points = translate_to_origin(scaled_points, n)
+    translated_points = translate_to_origin(scaled_points)
+    # print("length: " + str(len(translated_points)))
 
     return translated_points
 
@@ -168,14 +194,19 @@ def get_cloud_distance(points, template, n, start):
     matched_array = [False] * n
     distance_sum = 0
     i = start
+
     
     while True:
         minimum = float("inf")
         index = None
         j = 0
         while j < n:
+            # print("i" + str(points[i]))
+            # print("j" + str(template[j]))
+            # print("i: " + str(i))
+            # print("j: " + str(j))
             if not matched_array[j]:
-                d = get_distance(points[i], template[j])
+                d = get_distance([points[i][0], template[j][0]])
                 if d < minimum:
                     minimum = d
                     index = j
@@ -208,14 +239,14 @@ def greedy_cloud_match(points, template, n):
 
 # def recognize(points, n=32, templates=default_templates):
 def recognize(points, n=32, templates=data_mmg_flattened):
-    number_of_points = n
     points = normalize(points, n)
+    # print("points length: " + str(len(points)))
     score = float("inf")
     result = None
 
     for template in templates:
-        template.points = normalize(template.points, n)
-
+        # template.points = normalize(template.points, n)
+        # print("template points length: " + str(len(template.points)))
         d = greedy_cloud_match(points, template.points, n)
 
         if score > d:
@@ -230,14 +261,14 @@ def recognize(points, n=32, templates=data_mmg_flattened):
     return result, score
 
 
-def recognize_with_n_best(points, n=32, templates=default_templates):
+def recognize_with_n_best(points, n=32, templates=data_mmg_flattened):
     number_of_points = n
     points = normalize(points, n)
     # score = float("inf")
     result = []
 
     for template in templates:
-        template.points = normalize(template.points, n)
+        # template.points = normalize(template.points, n)
 
         d = greedy_cloud_match(points, template.points, n)
         result.append([template, d])
@@ -265,3 +296,5 @@ def preprocess_points(points):
     return points
 
 
+for template in data_mmg_flattened:
+    template.points = normalize(template.points)

@@ -30,7 +30,7 @@ import re
 # import xml.dom.minidom
 import xml.etree.ElementTree as ET
 # from preprocess_dollar_one import preprocess_points
-from preprocess_dollar_p import preprocess_points
+# from preprocess_dollar_p import preprocess_points
 from multistroke import Point, Multistroke
 
 # cwd = os.getcwd() + '\\src' + '\\dataset\\' + '\\10-stylus-MEDIUM'
@@ -54,7 +54,7 @@ for file in directory_contents:
     points = []
     stroke_num = 1
 
-    if gesture_label in data_mmg and len(data_mmg[gesture_label]) == 3:
+    if gesture_label in data_mmg and len(data_mmg[gesture_label]) == 1:
         continue
 
     for stroke in document.getroot():
@@ -69,7 +69,7 @@ for file in directory_contents:
         stroke_num = stroke_num + 1
     # print(len(points))
     gesture_obj = Multistroke(label=gesture_name, points=points)
-    gesture_obj.points = preprocess_points(gesture_obj.points)
+    # gesture_obj.points = preprocess_points(gesture_obj.points)
 
     if gesture_label in data_mmg:
         # print("length: " + str(len(points)) + ", name: " + gesture_name)
