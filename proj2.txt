@@ -11,6 +11,13 @@ We have stored the downloaded xml data in src folder. The code for parsing the x
 b) $P Recognizer:
 We used a newly written $P recognizer to process the gestures. The largest change me made to our recognize() function inside 'preprocess_dollar_one.py' was to change the output to be a list of pairs of the best results and scores from the recognition, rather than just the best result and its score
 
+Major Changes in comparison to previous $1 recognizer :
+  1.The class Point is  a representation of a point in a two-dimensional coordinate system, which contains the coordinates of the point (x, y) and has an optional stroke ID added for the multistroke recognizer
+
+  2.The "greedy cloud distance" method calculates the distance between two point clouds (i.e., sets of points in 2D space) by greedily pairing the points in one cloud to the closest points in the other cloud. This results in a sum of distances between pairs of points in the two clouds. The method is "greedy" because it makes the closest possible pairing at each step without considering future pairings.
+
+  3.The "greedy cloud match" method uses the greedy cloud distance method to compare a user-drawn gesture to a set of templates. It works by calculating the distance between the user-drawn gesture and each template, and then returning the template with the lowest distance. 
+
 c) Testing:
 Iterating over the dataset and testing it occurs in 'test.py'. This file is entirely devoted to performing the testing and is largely unchanged from our implementation from Part 3. Helper functions for managing the dataframe objects that store test data and running the recognizers are imported, as well as the variable that holds all of that data after it has been processed from 'load_data.py'
 
