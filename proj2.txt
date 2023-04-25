@@ -1,0 +1,16 @@
+Project 2 Submission for HCIRA, Spring '23
+
+Group Members :
+Aravind S
+Nathan Harris
+Shashanka Bhat
+
+a) read dataset
+We have stored the downloaded xml data in src folder. The code for parsing the xml data is stored in 'load_data.py' file. We use ElementTree provided by python to parse the xml files. A dictionary is created where the 1st level keys are for each user. The value for each user key is again a dictionary with the gesture labels as keys and the corresponding value is an array of gesture objects for each instance of the gesture for that user. The gesture object is used from the previous part of the project which handles the labels and points data of the gestures. Each gesture data is preprocessed and stored in the data.
+
+b) We used a newly written $P recognizer to process the gestures. The largest change me made to our recognize() function inside 'preprocess_dollar_one.py' was to change the output to be a list of pairs of the best results and scores from the recognition, rather than just the best result and its score
+
+c) Iterating over the dataset and testing it occurs in 'test.py'. This file is entirely devoted to performing the testing and is largely unchanged from our implementation from Part 3. Helper functions for managing the dataframe objects that store test data and running the recognizers are imported, as well as the variable that holds all of that data after it has been processed from 'load_data.py'
+
+d) output result
+The utility methods for storing the output for each iteration and comverting it to csv is present in 'output_util.py'. An empty dataframe with column names is created in as a template in the output_util.py file. 'create_empty_dataframe()' can be used to create an empty from the main testing program. 'add_list_to_dataframe()' takes in an existing dataframe and a list of values as a parameter. This method adds the list to the exisiting datafrane and returns back the updated dataframe. 'convert_dataframe_to_csv()' takes in a dataframe and filelocation as a paramanter and writes the dataframe to a csv file and stores the file in the given location.
